@@ -16,7 +16,7 @@ public class LogicUser {
         user.infor();
         userList.add(user);
         writeFileUser(userList);
-        System.out.println(userList);
+        System.out.println(userList);//in ra để xem lúc ghi xuống File ghi những gì.
     }
 
 
