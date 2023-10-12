@@ -10,7 +10,7 @@ public class LogicUser {
     List<User> userList = new ArrayList<>();
     public void inputInforUser() {
         userList=readFileUser();
-        System.out.println(userList);
+        System.out.println(userList);// in ra để xem đọc dữ liệu từ File
         User user = new User();
         user.createAcccount();
         user.infor();
