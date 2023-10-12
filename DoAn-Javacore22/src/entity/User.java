@@ -9,6 +9,13 @@ import java.util.Scanner;
 public class User extends Person implements InputInfor, Serializable {
     private static int nextIdUser = 10000;
     private int idUser;
+    protected String name ;
+    protected int ago;
+    protected String address;
+    protected String phone ;
+    protected Gender gender;
+
+
 
     public User() {
         this.idUser=nextIdUser;
@@ -23,11 +30,6 @@ public class User extends Person implements InputInfor, Serializable {
         this.idUser = idUser;
     }
 
-    protected String name ;
-    protected int ago;
-    protected String address;
-    protected String phone ;
-    protected Gender gender;
 
     public String getName() {
         return name;
@@ -69,6 +71,10 @@ public class User extends Person implements InputInfor, Serializable {
         this.gender = gender;
     }
 
+    public static void setNextIdUser(int nextIdUser) {
+        User.nextIdUser = nextIdUser;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -97,7 +103,6 @@ public class User extends Person implements InputInfor, Serializable {
         System.out.println("1. Nam");
         System.out.println("2. Nữ");
         choiceGender();
-
     }
     public void createAcccount(){
         System.out.print("Nhập tên đăng nhập của bạn : ");

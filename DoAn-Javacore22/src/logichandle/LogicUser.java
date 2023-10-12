@@ -1,22 +1,22 @@
 package logichandle;
 
-import Service.FileService;
 import entity.User;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogicUser {
     List<User> userList = new ArrayList<>();
     public void inputInforUser() {
+        userList=readFileUser();
+        System.out.println(userList);
         User user = new User();
         user.createAcccount();
         user.infor();
         userList.add(user);
-        FileService fileService = new FileService();
-        fileService.writeFile(userList);
-        List<User> users  =   fileService.readFile();
+        writeFileUser(userList);
+        System.out.println(userList);
     }
 
 
@@ -28,6 +28,31 @@ public class LogicUser {
             }
         }
         return null;
+    }
+    public   void writeFileUser(  List<User> userList ){
+
+
+        try {
+            ObjectOutputStream writeFile = new ObjectOutputStream(new FileOutputStream("account.data"));
+            writeFile.writeObject(userList);
+            writeFile.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public    List<User>   readFileUser()  {
+
+        ObjectInputStream readFile = null;
+        try {
+            readFile = new ObjectInputStream(new FileInputStream("account.data"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            return   (  List<User>  )  readFile.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

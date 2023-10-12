@@ -1,18 +1,20 @@
 package logichandle;
 
+import entity.Admin;
 import entity.Movie;
 import entity.User;
 
-import javax.xml.transform.Source;
-import javax.xml.transform.SourceLocator;
-import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class LogicMain {
-    LogicMovie logicMovie = new LogicMovie();
+    LogicAdmin logicAdmin = new LogicAdmin();
+
     LogicUser logicUser = new LogicUser();
+    LogicMovie logicMovie = new LogicMovie();
+
     public void run(){
+
         logInAndCreateAccount();
     }
 
@@ -53,7 +55,6 @@ public class LogicMain {
         System.out.println("***************************************************");
         logicUser.inputInforUser();
         logIn();
-
     }
 
     private void logIn() {
@@ -66,55 +67,67 @@ public class LogicMain {
             String userName = new Scanner(System.in).nextLine();
             System.out.print("Mật khẩu : ");
             String password = new Scanner(System.in).nextLine();
+            Admin admin = logicAdmin.searchAdmin(userName,password) ;
             User user = logicUser.searchUser(userName,password);
+            if (admin!=null){
+                menuAdmin();
+                break;
+            }
             if (user!=null){
+                menuUser();
                 break;
             }
             System.out.println("Tên tài khoản hoặc mật khẩu không đúng vui lòng nhập lại ");
         }while (true);
-        menuUser();
         choiceMenu();
     }
-    private void choiceMenu(){
-        int chcoiceFuntion = 0;
-        do {
-             try {
-                 chcoiceFuntion = new Scanner(System.in).nextInt();
-             }
-             catch (InputMismatchException e){
-                 System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
-             }
-             if (chcoiceFuntion>0&&chcoiceFuntion<11){
-                 break;
-             }
-            System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
 
-        }while (true);
-        switch (chcoiceFuntion){
-            case 1:
-                choiceFuntion1();
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                printAllMovie();
-                break;
-            case 8:
-                menuUser();
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-        }
+    private void menuAdmin() {
+    }
+
+    private void choiceMenu(){
+       while (true){
+           int chcoiceFuntion = 0;
+           do {
+               try {
+                   chcoiceFuntion = new Scanner(System.in).nextInt();
+               }
+               catch (InputMismatchException e){
+                   System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
+               }
+               if (chcoiceFuntion>0&&chcoiceFuntion<11){
+                   break;
+               }
+               System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
+
+           }while (true);
+           switch (chcoiceFuntion){
+               case 1:
+                   choiceFuntion1();
+                   break;
+               case 2:
+                   break;
+               case 3:
+                   break;
+               case 4:
+                   break;
+               case 5:
+                   break;
+               case 6:
+                   break;
+               case 7:
+                   printAllMovie();
+                   break;
+               case 8:
+                   menuUser();
+                   break;
+               case 9:
+                   break;
+               case 10:
+                   break;
+
+           }
+       }
     }
 
     private void printAllMovie() {
