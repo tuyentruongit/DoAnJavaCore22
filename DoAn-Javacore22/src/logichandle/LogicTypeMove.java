@@ -51,9 +51,9 @@ public class LogicTypeMove {
         System.out.println("Nhập thể loại mà bạn muốn xóa");
         String delete = new Scanner(System.in).nextLine();
         for (int i = 0; i < listTypeMovie.size(); i++) {
-            String a = listTypeMovie.get(i);
-            if (delete.equalsIgnoreCase(a)){
-                listTypeMovie.remove(a);
+            String name = listTypeMovie.get(i);
+            if (delete.equalsIgnoreCase(name)){
+                listTypeMovie.remove(name);
                 writeFileTypeMovie(listTypeMovie);
                 System.out.println("Thể loại phim "+delete+" đã bị xóa");
                 break;
@@ -73,4 +73,5 @@ public class LogicTypeMove {
         writeFileTypeMovie(listTypeMovie);
         System.out.println("Thể Loại mới đã được thêm");
     }
+
 }

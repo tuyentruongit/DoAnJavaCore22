@@ -176,6 +176,7 @@ public class LogicMain {
             System.out.println("------ Quản lý phim ------");
             System.out.println("1. Thêm phim");
             System.out.println("2. Xem danh sách phim");
+            System.out.println("3. Xóa phim ");
             System.out.println("3. Thoát");
             int choice = 0;
             do {
@@ -198,6 +199,7 @@ public class LogicMain {
                     logicMovie.printMovie();
                     break;
                 case 3:
+                    logicMovie.deleteMovie();
                     break;
             }
         }
@@ -211,10 +213,12 @@ public class LogicMain {
         System.out.println("Nhập tên phim mà bạn muốn tìm ");
         String nameMovie = new Scanner(System.in).nextLine();
         Movie movie = logicMovie.searchMovie(nameMovie);
-        if (movie==null){
-            System.out.println("Không có tên phim nào như trên");
+        if (movie!=null){
+            System.out.println(movie);
+            menuUser();
+            return;
         }
-        menuUser();
+        System.out.println("Không có tên phim nào như trên");
     }
     public   void menuUser(){
         System.out.println("***************************************************");
@@ -246,6 +250,7 @@ public class LogicMain {
                     choiceFuntion1();
                     break;
                 case 2:
+                    logicMovie.searchTypeMovie();
                     break;
                 case 3:
                     printAllMovie();

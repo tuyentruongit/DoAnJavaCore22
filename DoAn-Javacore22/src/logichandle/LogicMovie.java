@@ -73,4 +73,28 @@ public class LogicMovie {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteMovie() {
+        if (movieList.isEmpty()){
+            System.out.println("Chưa có thể loại phim nào, Vui lòng thêm mới");
+            return;
+        }
+        System.out.println(movieList);
+        System.out.println("Nhập thể loại mà bạn muốn xóa");
+        String delete = new Scanner(System.in).nextLine();
+        for (int i = 0; i < movieList.size(); i++) {
+            String name = String.valueOf(movieList.get(i));
+            if (delete.equalsIgnoreCase(movieList.get(i).getNameMovie())){
+                movieList.remove(name);
+                writeFileMovie(movieList);
+                System.out.println("Thể loại phim "+delete+" đã bị xóa");
+                break;
+            }
+            System.out.println("Thể loại phim trên không tồn tại");
+        }
+    }
+
+    public void searchTypeMovie() {
+        
+    }
 }
