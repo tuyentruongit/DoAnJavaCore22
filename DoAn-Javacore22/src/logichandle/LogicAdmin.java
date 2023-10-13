@@ -3,6 +3,7 @@ package logichandle;
 import entity.Admin;
 import entity.User;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,5 @@ public class LogicAdmin {
             }
             return null;
 
-    }
-    public void printMenuAdmin(){
-        System.out.println("");
     }
 }

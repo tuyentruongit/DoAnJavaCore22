@@ -9,7 +9,10 @@ import java.util.List;
 public class LogicUser {
     List<User> userList = new ArrayList<>();
     public void inputInforUser() {
-        userList=readFileUser();
+        File file = new File("account.data");
+        if (file.exists()){
+            userList=readFileUser();
+        }
         System.out.println(userList);// in ra để xem đọc dữ liệu từ File
         User user = new User();
         user.createAcccount();
@@ -30,8 +33,6 @@ public class LogicUser {
         return null;
     }
     public   void writeFileUser(  List<User> userList ){
-
-
         try {
             ObjectOutputStream writeFile = new ObjectOutputStream(new FileOutputStream("account.data"));
             writeFile.writeObject(userList);

@@ -79,56 +79,124 @@ public class LogicMain {
             }
             System.out.println("Tên tài khoản hoặc mật khẩu không đúng vui lòng nhập lại ");
         }while (true);
-        choiceMenu();
+    }
+
+
+    private void typeMovieAdmin() {
+        System.out.println("-------------- Quản lý thể loại phim -------------");
+        System.out.println("1. Hiển thị danh sách thể loại phim");
+        System.out.println("2. Thêm thể loại phim");
+        System.out.println("3. Xóa thể loại phim");
+        System.out.println("4. Thoát");
+        int choice = 0 ;
+        do {
+            try {
+                choice = new Scanner(System.in).nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
+            }
+            if (choice>0 && choice<5){
+                break;
+            }
+            System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
+        }while (true);
+        switch (choice){
+            case 1:
+                logicMovie.printTypeMovie();
+                break;
+            case 2:
+                logicMovie.addTypeMovie();
+                break;
+            case 3:
+                logicMovie.deleteTypeMovie();
+                break;
+            case 4:
+                break;
+        }
+
     }
 
     private void menuAdmin() {
+      while (true){
+          System.out.println("***************************************************");
+          System.out.println("*              Quản Lý Rạp Chiếu Phim             *");
+          System.out.println("***************************************************");
+          System.out.println("1. Thể Loại Phim");
+          System.out.println("2. Đồ ăn/ Uống");
+          System.out.println("3. Phim");
+          System.out.println("4. Lich sử");
+          System.out.println("5. Phòng chiếu phim");
+          System.out.println("6. Tìm kiếm thông tin khách hàng");
+          System.out.println("7. Báo cáo doanh thu");
+          System.out.println("8. Đăng xuất");
+          int choice = 0;
+          do {
+              try {
+                  choice = new Scanner(System.in).nextInt();
+              }catch (InputMismatchException e){
+                  System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
+              }
+              if (choice>0 && choice<9){
+                  break;
+              }
+              System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
+          }while (true);
+          switch (choice){
+              case 1:
+                  typeMovieAdmin();
+                  break;
+              case 2:
+
+                  break;
+              case 3:
+                  menuMovie();
+                  break;
+              case 4:
+                  break;
+              case 5:
+                  break;
+              case 6:
+                  break;
+              case 7:
+                  break;
+              case 8:
+                  logIn();
+                  break;
+          }
+      }
     }
 
-    private void choiceMenu(){
-       while (true){
-           int chcoiceFuntion = 0;
-           do {
-               try {
-                   chcoiceFuntion = new Scanner(System.in).nextInt();
-               }
-               catch (InputMismatchException e){
-                   System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
-               }
-               if (chcoiceFuntion>0&&chcoiceFuntion<11){
-                   break;
-               }
-               System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
+    private void menuMovie() {
+        while (true){
+            System.out.println("------ Quản lý phim ------");
+            System.out.println("1. Thêm phim");
+            System.out.println("2. Xem danh sách phim");
+            System.out.println("3. Thoát");
+            int choice = 0;
+            do {
+                try{
+                    choice = new Scanner(System.in).nextInt();
+                }catch (InputMismatchException e){
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
+                }
+                if (choice>0 && choice<4){
+                    break;
+                }
+                System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
+            }while (true);
 
-           }while (true);
-           switch (chcoiceFuntion){
-               case 1:
-                   choiceFuntion1();
-                   break;
-               case 2:
-                   break;
-               case 3:
-                   break;
-               case 4:
-                   break;
-               case 5:
-                   break;
-               case 6:
-                   break;
-               case 7:
-                   printAllMovie();
-                   break;
-               case 8:
-                   menuUser();
-                   break;
-               case 9:
-                   break;
-               case 10:
-                   break;
+            switch (choice) {
+                case 1:
+                    logicMovie.addMovie();
+                    break;
+                case 2:
 
-           }
-       }
-    }
+                    break;
+                case 3:
+                    break;
+            }
+        }
+     }
 
     private void printAllMovie() {
         logicMovie.printMovie();
@@ -148,18 +216,43 @@ public class LogicMain {
         System.out.println("*                     Trang Chủ                   *");
         System.out.println("***************************************************");
         System.out.println("1. Tìm kiếm ");
-        System.out.println("");
-        System.out.println(" Thể Loại phim ");
-        System.out.print("2 Phim Hành Động ");
-        System.out.print("3 Phim Hài ");
-        System.out.println("4 Phim Gia Đình ");
-        System.out.print("5 Phim Kinh Dị ");
-        System.out.println("6 Phim Hoạt Hình ");
-        System.out.println("");
-        System.out.println("7. Tất cả Phim ");
-        System.out.println("");
-        System.out.println("****************************************************");
-        System.out.println("* 8. Trang chủ    9. lịch sử đặt vé   10. Tài Khoản *");
-        System.out.println("****************************************************");
+        System.out.println("2. Tìm Kiếm theo thể loại phim");
+        System.out.println("3. Tất cả Phim ");
+        System.out.println("4. Lịch sử đặt vé ");
+        System.out.println("5 Tài Khoản");
+        System.out.println("6. Đăng xuất");
+        while (true){
+            int chcoiceFuntion = 0;
+            do {
+                try {
+                    chcoiceFuntion = new Scanner(System.in).nextInt();
+                }
+                catch (InputMismatchException e){
+                    System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
+                }
+                if (chcoiceFuntion>0&&chcoiceFuntion<11){
+                    break;
+                }
+                System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
+
+            }while (true);
+            switch (chcoiceFuntion){
+                case 1:
+                    choiceFuntion1();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    printAllMovie();
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    logIn();
+                    return;
+            }
+        }
     }
 }

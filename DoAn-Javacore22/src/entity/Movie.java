@@ -4,6 +4,8 @@ import statics.TypeMovie;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Movie implements InputInfor {
     private static int nextId =1;
@@ -13,21 +15,13 @@ public class Movie implements InputInfor {
     private String director;
     private String performer;
     private String manufacturer;
-    private int price;
+    private float price;
     private LocalTime movieDuration;
     private LocalDate publishYear;
 
     public Movie() {
         this.idMovie=nextId;
         nextId++;
-    }
-
-    public int getIdMovie() {
-        return idMovie;
-    }
-
-    public void setIdMovie(int idMovie) {
-        this.idMovie = idMovie;
     }
 
     public String getNameMovie() {
@@ -70,11 +64,11 @@ public class Movie implements InputInfor {
         this.manufacturer = manufacturer;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -95,7 +89,70 @@ public class Movie implements InputInfor {
     }
 
     @Override
-    public void infor() {
+    public String toString() {
+        return "Movie{" +
+                "idMovie=" + idMovie +
+                ", nameMovie='" + nameMovie + '\'' +
+                ", typeMovie=" + typeMovie +
+                ", director='" + director + '\'' +
+                ", performer='" + performer + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", price=" + price +
+                ", movieDuration=" + movieDuration +
+                ", publishYear=" + publishYear +
+                '}';
+    }
 
+    @Override
+    public void infor() {
+        System.out.println("Nhập tên của bộ Phim");
+        this.setNameMovie(new Scanner(System.in).nextLine());
+        System.out.println("Nhập thể loại của bộ Phim");
+        System.out.println("1. Phim Hoạt Hình ");
+        System.out.println("2. Phim Hài ");
+        System.out.println("3. Phim Kinh Dị ");
+        System.out.println("4. Phim Hành Động ");
+        System.out.println("5. Phim Gia Đình ");
+        int choice = 0;
+        do {
+            try {
+                choice = new Scanner(System.in).nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , Vui lòng nhập lại");
+            }if (choice>0&& choice<5){
+                break;
+            }
+            System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , Vui lòng nhập lại");
+        }while (true);
+        switch (choice){
+            case 1:
+                this.setTypeMovie(TypeMovie.CARTOON);
+                break;
+            case 2:
+                this.setTypeMovie(TypeMovie.COMEDY);
+                break;
+            case 3:
+                this.setTypeMovie(TypeMovie.HORROR_MOVIE);
+                break;
+            case 4:
+                this.setTypeMovie(TypeMovie.ACTION_MOVIE);
+                break;
+            case 5:
+                this.setTypeMovie(TypeMovie.FAMILY_MOVIE);
+                break;
+        }
+
+        System.out.println("Nhập đạo diễn của bộ Phim");
+        this.setDirector(new Scanner(System.in).nextLine());
+        System.out.println("Nhập diễn viên của bộ Phim");
+        this.setPerformer(new Scanner(System.in).nextLine());
+        System.out.println("Nhập hãng sản xuất của bộ Phim");
+        this.setManufacturer(new Scanner(System.in).nextLine());
+        System.out.println("Nhập giá của bộ Phim");
+        this.setPrice( new Scanner(System.in).nextFloat());
+        System.out.println("Nhập năm xuất bản của bộ Phim");
+        this.setPublishYear(LocalDate.parse(new Scanner(System.in).nextLine()));
+        System.out.println("Nhập thời lượng của bộ Phim");
+        this.setMovieDuration(LocalTime.parse(new Scanner(System.in).nextLine()));
     }
 }
