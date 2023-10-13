@@ -155,4 +155,4 @@ public class Movie implements InputInfor {
         System.out.println("Nhập thời lượng của bộ Phim");
         this.setMovieDuration(LocalTime.parse(new Scanner(System.in).nextLine()));
     }
-}
+    }

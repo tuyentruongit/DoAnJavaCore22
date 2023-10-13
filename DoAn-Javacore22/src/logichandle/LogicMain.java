@@ -12,6 +12,7 @@ public class LogicMain {
 
     LogicUser logicUser = new LogicUser();
     LogicMovie logicMovie = new LogicMovie();
+    LogicTypeMove logicTypeMove = new LogicTypeMove();
 
     public void run(){
 
@@ -83,36 +84,39 @@ public class LogicMain {
 
 
     private void typeMovieAdmin() {
-        System.out.println("-------------- Quản lý thể loại phim -------------");
-        System.out.println("1. Hiển thị danh sách thể loại phim");
-        System.out.println("2. Thêm thể loại phim");
-        System.out.println("3. Xóa thể loại phim");
-        System.out.println("4. Thoát");
-        int choice = 0 ;
-        do {
-            try {
-                choice = new Scanner(System.in).nextInt();
-            }catch (InputMismatchException e){
-                System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
-            }
-            if (choice>0 && choice<5){
-                break;
-            }
-            System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
-        }while (true);
-        switch (choice){
-            case 1:
-                logicMovie.printTypeMovie();
-                break;
-            case 2:
-                logicMovie.addTypeMovie();
-                break;
-            case 3:
-                logicMovie.deleteTypeMovie();
-                break;
-            case 4:
-                break;
-        }
+       while (true){
+           System.out.println("-------------- Quản lý thể loại phim -------------");
+           System.out.println("1. Hiển thị danh sách thể loại phim");
+           System.out.println("2. Thêm thể loại phim");
+           System.out.println("3. Xóa thể loại phim");
+           System.out.println("4. Thoát");
+           int choice = 0 ;
+           do {
+               try {
+                   choice = new Scanner(System.in).nextInt();
+               }catch (InputMismatchException e){
+                   System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
+               }
+               if (choice>0 && choice<5){
+                   break;
+               }
+               System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
+           }while (true);
+           switch (choice){
+               case 1:
+                   logicTypeMove.printTypeMovie();
+                   break;
+               case 2:
+                   logicTypeMove.addTypeMovie();
+                   break;
+               case 3:
+                   logicTypeMove.deleteTypeMovie();
+                   break;
+               case 4:
+                   menuAdmin();
+                   break;
+           }
+       }
 
     }
 
@@ -154,6 +158,7 @@ public class LogicMain {
               case 4:
                   break;
               case 5:
+
                   break;
               case 6:
                   break;
@@ -190,7 +195,7 @@ public class LogicMain {
                     logicMovie.addMovie();
                     break;
                 case 2:
-
+                    logicMovie.printMovie();
                     break;
                 case 3:
                     break;
