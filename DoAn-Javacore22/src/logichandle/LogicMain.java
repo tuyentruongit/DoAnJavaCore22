@@ -13,6 +13,10 @@ public class LogicMain {
     LogicUser logicUser = new LogicUser();
     LogicMovie logicMovie = new LogicMovie();
     LogicTypeMove logicTypeMove = new LogicTypeMove();
+    LogicRoom logicRoom = new LogicRoom();
+    LogicShowTime logicShowTime = new LogicShowTime(logicRoom,logicMovie);
+    LogicBuyMovieTicket logicBuyMovieTicket = new LogicBuyMovieTicket();
+
 
     public void run(){
 
@@ -89,18 +93,19 @@ public class LogicMain {
            System.out.println("1. Hiển thị danh sách thể loại phim");
            System.out.println("2. Thêm thể loại phim");
            System.out.println("3. Xóa thể loại phim");
-           System.out.println("4. Thoát");
+           System.out.println("4. Trở lại");
            int choice = 0 ;
            do {
                try {
                    choice = new Scanner(System.in).nextInt();
+                   if (choice>0 && choice<5){
+                       break;
+                   }
+                   System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
                }catch (InputMismatchException e){
                    System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
                }
-               if (choice>0 && choice<5){
-                   break;
-               }
-               System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
+
            }while (true);
            switch (choice){
                case 1:
@@ -128,7 +133,7 @@ public class LogicMain {
           System.out.println("1. Thể Loại Phim");
           System.out.println("2. Đồ ăn/ Uống");
           System.out.println("3. Phim");
-          System.out.println("4. Lich sử");
+          System.out.println("4. Lich sử mua vé của khách hàng");
           System.out.println("5. Phòng chiếu phim");
           System.out.println("6. Tìm kiếm thông tin khách hàng");
           System.out.println("7. Báo cáo doanh thu");
@@ -137,20 +142,20 @@ public class LogicMain {
           do {
               try {
                   choice = new Scanner(System.in).nextInt();
+                  if (choice>0 && choice<9){
+                      break;
+                  }
+                  System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
               }catch (InputMismatchException e){
                   System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
               }
-              if (choice>0 && choice<9){
-                  break;
-              }
-              System.out.println("Đã sảy ra lỗi , Vui lòng chọn lại");
           }while (true);
           switch (choice){
               case 1:
                   typeMovieAdmin();
                   break;
               case 2:
-
+                  logicAdmin.menuService();
                   break;
               case 3:
                   menuMovie();
@@ -158,9 +163,10 @@ public class LogicMain {
               case 4:
                   break;
               case 5:
-
+                  menuRoom();
                   break;
               case 6:
+                  logicUser.searchClient();
                   break;
               case 7:
                   break;
@@ -177,18 +183,18 @@ public class LogicMain {
             System.out.println("1. Thêm phim");
             System.out.println("2. Xem danh sách phim");
             System.out.println("3. Xóa phim ");
-            System.out.println("3. Thoát");
+            System.out.println("4. Thoát");
             int choice = 0;
             do {
                 try{
                     choice = new Scanner(System.in).nextInt();
+                    if (choice>0 && choice<5){
+                        break;
+                    }
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
                 }catch (InputMismatchException e){
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
                 }
-                if (choice>0 && choice<4){
-                    break;
-                }
-                System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
             }while (true);
 
             switch (choice) {
@@ -209,59 +215,89 @@ public class LogicMain {
         logicMovie.printMovie();
     }
 
-    private void choiceFuntion1() {
-        System.out.println("Nhập tên phim mà bạn muốn tìm ");
-        String nameMovie = new Scanner(System.in).nextLine();
-        Movie movie = logicMovie.searchMovie(nameMovie);
-        if (movie!=null){
-            System.out.println(movie);
-            menuUser();
-            return;
-        }
-        System.out.println("Không có tên phim nào như trên");
-    }
     public   void menuUser(){
-        System.out.println("***************************************************");
-        System.out.println("*                     Trang Chủ                   *");
-        System.out.println("***************************************************");
-        System.out.println("1. Tìm kiếm ");
-        System.out.println("2. Tìm Kiếm theo thể loại phim");
-        System.out.println("3. Tất cả Phim ");
-        System.out.println("4. Lịch sử đặt vé ");
-        System.out.println("5 Tài Khoản");
-        System.out.println("6. Đăng xuất");
-        while (true){
-            int chcoiceFuntion = 0;
+       while (true){
+           System.out.println("***************************************************");
+           System.out.println("*                     Trang Chủ                   *");
+           System.out.println("***************************************************");
+           System.out.println("1. Tìm kiếm phim ");
+           System.out.println("2. Tìm Kiếm theo thể loại phim");
+           System.out.println("3. Tất cả Phim ");
+           System.out.println("4. Đặt vé ");
+           System.out.println("5. Tài Khoản");
+           while (true){
+               int chcoiceFuntion = 0;
+               do {
+                   try {
+                       chcoiceFuntion = new Scanner(System.in).nextInt();
+                       if (chcoiceFuntion>0&&chcoiceFuntion<11){
+                           break;
+                       }
+                       System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
+                   }
+                   catch (InputMismatchException e){
+                       System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
+                   }
+               }while (true);
+               switch (chcoiceFuntion){
+                   case 1:
+                       logicMovie.searchMovieForUser();
+                       break;
+                   case 2:
+                       logicMovie.searchByTypeMovie();
+                       break;
+                   case 3:
+                       logicMovie.printMovie();
+                       break;
+                   case 4:
+                       logicBuyMovieTicket.bookTickets();
+                       break;
+                   case 5:
+                       logicUser.inforAccount();
+                       break;
+               }
+           }
+       }
+    }
+    public void menuRoom() {
+        while (true) {
+            System.out.println("----------- Quản Lý Phòng chiếu ----------");
+            System.out.println("1. Thêm Phòng Chiếu");
+            System.out.println("2. Xóa Phòng chiếu");
+            System.out.println("3. Tìm kiếm phòng chiếu phim");
+            System.out.println("4. Sắp xếp lịch chiếu phim của phòng chiếu ");
+            System.out.println("5. Xem lịch chiếu ");
+            System.out.println("6. Trở lại");
+            System.out.println("Bạn vui lòng chọn những tính năng trên");
+            int choice = 0;
             do {
                 try {
-                    chcoiceFuntion = new Scanner(System.in).nextInt();
+                    choice = new Scanner(System.in).nextInt();
+                    if (choice > 0 && choice < 6) {
+                        break;
+                    }
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
+                } catch (InputMismatchException e) {
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
                 }
-                catch (InputMismatchException e){
-                    System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
-                }
-                if (chcoiceFuntion>0&&chcoiceFuntion<11){
-                    break;
-                }
-                System.out.println("Đã sảy ra lỗi, Bạn vui lòng chọn lại  ");
-
-            }while (true);
-            switch (chcoiceFuntion){
+            } while (true);
+            switch (choice) {
                 case 1:
-                    choiceFuntion1();
+                    logicRoom.addRoom();
                     break;
                 case 2:
-                    logicMovie.searchTypeMovie();
+                    logicRoom.deleteRoom();
                     break;
                 case 3:
-                    printAllMovie();
-                    break;
+                    logicRoom.searchRoom();
                 case 4:
+                    logicShowTime.sortShowTimes();
                     break;
                 case 5:
+                    logicShowTime.printShowtime();
                     break;
                 case 6:
-                    logIn();
-                    return;
+                    break;
             }
         }
     }

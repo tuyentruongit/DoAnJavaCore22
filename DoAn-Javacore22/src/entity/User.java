@@ -10,10 +10,10 @@ public class User extends Person implements InputInfor, Serializable {
     private static int nextIdUser = 10000;
     private int idUser;
     protected String name ;
-    protected int ago;
-    protected String address;
-    protected String phone ;
-    protected Gender gender;
+    private int ago;
+    private String address;
+    private String phone ;
+    private Gender gender;
 
 
 
@@ -83,7 +83,7 @@ public class User extends Person implements InputInfor, Serializable {
                 ", ago=" + ago +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
-                ", gender=" + gender +
+                ", gender=" + gender.value +
                 ", accountName='" + accountName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
@@ -98,12 +98,35 @@ public class User extends Person implements InputInfor, Serializable {
         System.out.println("Nhập địa chỉ  của bạn : ");
         this.setAddress(new Scanner(System.in).nextLine());
         System.out.println("Nhập số điện thoại của bạn : ");
-        this.setPhone(new Scanner(System.in).nextLine());
+        do {
+            do {
+                try {
+                    this.setPhone(new Scanner(System.in).nextLine());
+                    break;
+                }
+                catch (InputMismatchException e){
+                    System.out.println("Dữ liệu bạn vừa nhập không đúng, Vui lòng nhập lại");
+                }
+            }while (true);
+            if (regexPhoneNumber(getPhone())){
+                break;
+            }
+            System.out.println("So dien thoai ban vua nhap khong dung vui long nhap lai");
+        }while (true);
         System.out.println("Nhập giới tính của bạn : ");
         System.out.println("1. Nam");
         System.out.println("2. Nữ");
         choiceGender();
     }
+
+    private boolean regexPhoneNumber(String phone) {
+        String regex =  "(84|0[3|5|7|8|9])+([0-9]{8})\\b";
+        if(phone.matches(regex)){
+            return true;
+        }
+        return false;
+    }
+
     public void createAcccount(){
         System.out.print("Nhập tên đăng nhập của bạn : ");
         this.setAccountName(new Scanner(System.in).nextLine());

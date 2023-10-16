@@ -1,9 +1,7 @@
 package logichandle;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class LogicTypeMove {
     List<String> listTypeMovie = new ArrayList<>();
@@ -16,7 +14,9 @@ public class LogicTypeMove {
             System.out.println("Chưa có thể loại phim nào, Vui lòng thêm mới");
             return;
         }
-        System.out.println(listTypeMovie);
+        for (int i = 0; i < listTypeMovie.size(); i++) {
+            System.out.println(listTypeMovie.get(i));
+        }
     }
     public   void writeFileTypeMovie(  List<String> stringList ){
         try {
@@ -55,7 +55,7 @@ public class LogicTypeMove {
             if (delete.equalsIgnoreCase(name)){
                 listTypeMovie.remove(name);
                 writeFileTypeMovie(listTypeMovie);
-                System.out.println("Thể loại phim "+delete+" đã bị xóa");
+                System.out.println("Thể loại  "+delete+" đã bị xóa");
                 break;
             }
             System.out.println("Thể loại phim trên không tồn tại");
@@ -67,11 +67,29 @@ public class LogicTypeMove {
         if (file.exists()){
             listTypeMovie = readFileTypeMovie();
         }
-        System.out.println("Nhập tên thể loại phim mới");
-        String name = new Scanner(System.in).nextLine();
-        listTypeMovie.add(name);
-        writeFileTypeMovie(listTypeMovie);
-        System.out.println("Thể Loại mới đã được thêm");
+        System.out.println("Bạn muốn thêm bao nhiêu thể loại phim mới");
+        int   quantity = 0;
+       do {
+           try{
+               quantity = new Scanner(System.in).nextInt();
+               break;
+           }catch (InputMismatchException e){
+               System.out.println("Dữ liệu bạn vừa nhập không đúng, vui lòng nhập lại");
+           }
+       }while (true);
+        for (int i = 0; i < quantity; i++) {
+            System.out.println("Nhập tên thể loại phim mới thứ"+(i+1));
+            String name = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
+            for (int j = 0; j < listTypeMovie.size(); j++) {
+                if (listTypeMovie.get(j).equals(name)){
+                    System.out.println("Thể loại này đã có trong rạp");
+                    return;
+                }
+            }
+            listTypeMovie.add(name);
+            writeFileTypeMovie(listTypeMovie);
+            System.out.println("Thêm thành công");
+        }
     }
 
 }

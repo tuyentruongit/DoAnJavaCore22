@@ -2,7 +2,9 @@ package entity;
 
 import statics.Gender;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
 
     protected String accountName;
     protected String password;

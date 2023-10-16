@@ -1,26 +1,12 @@
 package entity;
 
-public class Room {
-    private int capacity;
-    private float display;
+import java.io.Serializable;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Room implements Serializable {
     private String nameRoom;
-    private int  idSeat ;
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public float getDisplay() {
-        return display;
-    }
-
-    public void setDisplay(float display) {
-        this.display = display;
-    }
+    private int capacity;
 
     public String getNameRoom() {
         return nameRoom;
@@ -30,11 +16,34 @@ public class Room {
         this.nameRoom = nameRoom;
     }
 
-    public int getIdSeat() {
-        return idSeat;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setIdSeat(int idSeat) {
-        this.idSeat = idSeat;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "name='" + nameRoom + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
+
+    public void infor() {
+        System.out.println("Nhập tên của phòng chiếu ");
+        this.setNameRoom(new Scanner(System.in).nextLine());
+        do {
+            System.out.println("Nhập sức chứa phòng chiếu ");
+            try{
+                this.setCapacity(new Scanner(System.in).nextInt());
+                break;
+            }
+            catch (InputMismatchException e){
+                System.out.println("Đã xay ra lỗi vui lòng nhập lại");
+            }
+        }while (true);
     }
 }

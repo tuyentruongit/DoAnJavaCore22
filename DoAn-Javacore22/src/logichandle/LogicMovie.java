@@ -13,6 +13,24 @@ import java.util.Scanner;
 public class LogicMovie {
     List<Movie> movieList = new ArrayList<>();
 
+    public void searchMovieForUser() {
+        System.out.println("Nhập tên phim mà bạn muốn tìm ");
+        String nameMovie = new Scanner(System.in).nextLine();
+        Movie movie = searchMovie(nameMovie);
+        if (movie!=null){
+            System.out.println("***************************************************");
+            System.out.println("Tên phim: "+ movie.getNameMovie());
+            System.out.println("Thể Loại: "+ movie.getTypeMovie().value);;
+            System.out.println("Đạo diễn: "+ movie.getDirector());;
+            System.out.println("Diễn Viên Chính: "+ movie.getPerformer());;
+            System.out.println("Thời lượng phim: "+ movie.getMovieDuration());;
+            System.out.println("Hãng sản xuất: "+ movie.getManufacturer());;
+            System.out.println("Năm sản xuất: "+ movie.getPublishYear());;
+            System.out.println("Giá tiền: "+ movie.getPrice()+ " VND");;
+            System.out.println("***************************************************");
+        }
+        System.out.println("Không có tên phim nào như trên");
+    }
     public Movie searchMovie(String nameMovie) {
         for (int i = 0; i < movieList.size(); i++) {
             if (nameMovie.equalsIgnoreCase(movieList.get(i).getNameMovie())){
@@ -23,7 +41,25 @@ public class LogicMovie {
     }
 
     public void printMovie() {
-        System.out.println(movieList);
+        File file = new File("movie.data");
+        if (file.exists()){
+            movieList=readFileMovie();
+        }
+        if (movieList.isEmpty()){
+            System.out.println("Chưa có phim nào, Vui lòng thếm mới");
+        }
+        for (int i = 0; i < movieList.size(); i++) {
+            System.out.println("***************************************************");
+            System.out.println("Tên phim: "+movieList.get(i) .getNameMovie());
+            System.out.println("Thể Loại: "+ movieList.get(i).getTypeMovie().value);;
+            System.out.println("Đạo diễn: "+ movieList.get(i).getDirector());;
+            System.out.println("Diễn Viên Chính: "+ movieList.get(i).getPerformer());;
+            System.out.println("Thời lượng phim: "+ movieList.get(i).getMovieDuration());;
+            System.out.println("Hãng sản xuất: "+ movieList.get(i).getManufacturer());;
+            System.out.println("Năm sản xuất: "+ movieList.get(i).getPublishYear());;
+            System.out.println("Giá tiền: "+ movieList.get(i).getPrice()+ " VND");;
+            System.out.println("***************************************************");
+        }
     }
 
 
@@ -76,25 +112,52 @@ public class LogicMovie {
 
     public void deleteMovie() {
         if (movieList.isEmpty()){
-            System.out.println("Chưa có thể loại phim nào, Vui lòng thêm mới");
+            System.out.println("Chưa có  phim nào, Vui lòng thêm mới");
             return;
         }
         System.out.println(movieList);
-        System.out.println("Nhập thể loại mà bạn muốn xóa");
+        System.out.println("Nhập tên phim mà bạn muốn xóa");
         String delete = new Scanner(System.in).nextLine();
         for (int i = 0; i < movieList.size(); i++) {
             String name = String.valueOf(movieList.get(i));
             if (delete.equalsIgnoreCase(movieList.get(i).getNameMovie())){
                 movieList.remove(name);
                 writeFileMovie(movieList);
-                System.out.println("Thể loại phim "+delete+" đã bị xóa");
+                System.out.println(" Phim "+delete+" đã bị xóa");
                 break;
             }
-            System.out.println("Thể loại phim trên không tồn tại");
+            System.out.println("Phim trên không tồn tại trong rạp");
         }
     }
 
-    public void searchTypeMovie() {
-        
+    public void searchByTypeMovie() {
+        File file = new File("movie.data");
+        if (file.exists()){
+            movieList=readFileMovie();
+        }
+        System.out.println("Nhập thể loại phim mà bạn muốn tìm kiếm");
+        String nameTypemovie = new Scanner(System.in).nextLine();
+        for (int i = 0; i < movieList.size(); i++) {
+            if (movieList.get(i).getTypeMovie().equals(nameTypemovie)){
+                System.out.println("***************************************************");
+                System.out.println("Tên phim: "+movieList.get(i) .getNameMovie());
+                System.out.println("Thể Loại: "+ movieList.get(i).getTypeMovie().value);;
+                System.out.println("Đạo diễn: "+ movieList.get(i).getDirector());;
+                System.out.println("Diễn Viên Chính: "+ movieList.get(i).getPerformer());;
+                System.out.println("Thời lượng phim: "+ movieList.get(i).getMovieDuration());;
+                System.out.println("Hãng sản xuất: "+ movieList.get(i).getManufacturer());;
+                System.out.println("Năm sản xuất: "+ movieList.get(i).getPublishYear());;
+                System.out.println("Giá tiền: "+ movieList.get(i).getPrice()+ " VND");;
+                System.out.println("***************************************************");
+            }
+        }
+        System.out.println("Không có thể loại phim nào như bạn đã nhập");
+    }
+    public void statrReadFileMovie(){
+        File file = new File("movie.data");
+        if (file.exists()){
+            movieList=readFileMovie();
+        }
+        System.out.println(movieList);
     }
 }

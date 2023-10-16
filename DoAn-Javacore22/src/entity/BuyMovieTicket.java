@@ -1,22 +1,48 @@
 package entity;
 
+import java.util.PrimitiveIterator;
+
 public class BuyMovieTicket {
-    private int quantity;
-    private Movie movie;
+    private  User user;
+    private int totalAmount;
+    private ShowTimes showTimes;
 
-    public int getQuantity() {
-        return quantity;
+    public BuyMovieTicket(User user, int totalAmount, ShowTimes showTimes) {
+        this.user = user;
+        this.totalAmount = totalAmount;
+        this.showTimes = showTimes;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public float getTotalAmount() {
+        return totalAmount;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public void setTotalAmount(int   totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public ShowTimes getShowTimes() {
+        return showTimes;
+    }
+
+    public void setShowTimes(ShowTimes showTimes) {
+        this.showTimes = showTimes;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "BuyMovieTicket{" +
+                "user=" + user +
+                ", totalAmount=" + totalAmount +
+                ", showTimes=" + showTimes +
+                '}';
     }
 }
