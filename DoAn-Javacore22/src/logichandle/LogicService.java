@@ -92,8 +92,19 @@ public class LogicService {
             System.out.println("Chưa có dịch vụ nào , Vui lòng thêm mới");
             return;
         }
+        System.out.println("Đồ uống :");
         for (int i = 0; i < serviceList.size(); i++) {
-            System.out.println(serviceList.get(i));
+           if (serviceList.get(i).getTypeService().value.equalsIgnoreCase("Đồ uống")){
+               System.out.print("Tên: "+serviceList.get(i).getName());
+               System.out.println("Giá: "+serviceList.get(i).getPrice()+" VND");
+           }
+        }
+        System.out.println("Đồ ăn :");
+        for (int i = 0; i < serviceList.size(); i++) {
+            if (serviceList.get(i).getTypeService().value.equalsIgnoreCase("Đồ ăn")) {
+                System.out.print("Tên: " + serviceList.get(i).getName());
+                System.out.println("Giá: " + serviceList.get(i).getPrice() + " VND");
+            }
         }
     }
 
@@ -103,10 +114,11 @@ public class LogicService {
             return;
         }
         System.out.println("Nhập tên dịch vụ mà bạn muốn tìm");
-        String name = new Scanner(System.in).nextLine();
+        String name = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
         for (int i = 0; i < serviceList.size() ; i++) {
             if (serviceList.get(i).getName().equalsIgnoreCase(name)){
-                System.out.println(serviceList.get(i));
+                System.out.print("Tên: "+serviceList.get(i).getName());
+                System.out.println("Giá: "+serviceList.get(i).getPrice()+" VND");
                 return;
             }
         }

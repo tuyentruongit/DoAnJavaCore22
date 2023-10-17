@@ -25,22 +25,24 @@ public class LogicBuyMovieTicket {
             System.out.println(logicShowTime.showTimesList.get(i));
         }
         System.out.println("Bạn muốn đặt vé xem bộ phim nào ?");
-        String name = new Scanner(System.in).nextLine();
+        String name ;
         System.out.println("Chọn giờ chiếu mà bạn muốn xem");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String timeInput;
         LocalTime showtime ;
         boolean count = false;
         ShowTimes showTimes = null;
+        float price = 0;
         do {
-            name = new Scanner(System.in).nextLine();
-            timeInput= new Scanner(System.in).nextLine();
+            name =new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
+            timeInput= new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
             showtime = LocalTime.parse(timeInput, timeFormatter);
             for (int i = 0; i < logicShowTime.showTimesList.size(); i++) {
                 if ( logicShowTime.showTimesList.get(i).getShowTimeMovieList().get(i).getMovie().getNameMovie().equalsIgnoreCase(name)
                 && showtime.equals(logicShowTime.showTimesList.get(i).getShowTimeMovieList().get(i).getGiochieu())){
                     showTimes =logicShowTime.showTimesList.get(i);
                     count = true;
+                    price = logicShowTime.showTimesList.get(i).getShowTimeMovieList().get(i).getMovie().getPrice();
                     break;
                 }
             }
@@ -59,6 +61,29 @@ public class LogicBuyMovieTicket {
                 System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
             }
         }while (true);
+        float  sum = price * numberTicket;
+        System.out.println("Tổng tiền bạn phải thanh toán là "+sum+" VND");
+        System.out.println("1. Thanh toán");
+        System.out.println("2.Trở lại");
+        int choice ;
+        do {
+            try {
+                choice = new Scanner(System.in).nextInt();
+                if (choice>0 && choice<3){
+                    break;
+                }
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+            }catch (InputMismatchException e ){
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+            }
+        }while (true);
+        switch (choice){
+            case 1:
+                System.out.println("Thanh toán thành công");
+                break;
+            case 2:
+                break;
+        }
     }
 
 

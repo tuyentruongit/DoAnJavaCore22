@@ -1,14 +1,13 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.PrimitiveIterator;
 
-public class BuyMovieTicket {
-    private  User user;
+public class BuyMovieTicket implements Serializable {
     private int totalAmount;
     private ShowTimes showTimes;
 
-    public BuyMovieTicket(User user, int totalAmount, ShowTimes showTimes) {
-        this.user = user;
+    public BuyMovieTicket(int totalAmount, ShowTimes showTimes) {
         this.totalAmount = totalAmount;
         this.showTimes = showTimes;
     }
@@ -29,19 +28,11 @@ public class BuyMovieTicket {
         this.showTimes = showTimes;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     @Override
     public String toString() {
         return "BuyMovieTicket{" +
-                "user=" + user +
-                ", totalAmount=" + totalAmount +
+                "totalAmount=" + totalAmount +
                 ", showTimes=" + showTimes +
                 '}';
     }

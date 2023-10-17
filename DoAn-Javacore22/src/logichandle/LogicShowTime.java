@@ -2,6 +2,7 @@ package logichandle;
 
 import entity.*;
 
+import javax.xml.namespace.QName;
 import java.io.*;
 import java.security.cert.TrustAnchor;
 import java.time.DateTimeException;
@@ -25,16 +26,17 @@ public class LogicShowTime {
 
 
     public void sortShowTimes() {
-        File file = new File("showtime.data");
-        if (file.exists()){
-            showTimesList=readFileShowTimes();
-        }
-        logicRoom.startReadFileRoom();//Đọc File phòng chiếu
+        startReadFileShowTimes();
+        logicRoom.startReadFileRoom();
         if (logicRoom.roomList.isEmpty()){
             System.out.println("Chưa có phòng chiếu phim nào , Vui lòng thêm mới");
             return;
         }
-        logicMovie.statrReadFileMovie();//Đọc file phim
+        logicMovie.statrReadFileMovie();
+        if (logicMovie.movieList.isEmpty()){
+            System.out.println("Chưa có phim nào , Vui lòng thêm mới");
+            return;
+        }
         System.out.println("Bạn muốn sắp xếp lịch chiếu cho bao nhiêu phòng  ");
         int quantity ;
         do {
@@ -50,26 +52,26 @@ public class LogicShowTime {
             String name;
             Room room;
             do {
-                name = new Scanner(System.in).nextLine();
+                name =  new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
                 room = logicRoom.searchRoombyShowTime(name);
                 if (room != null) {
                     break;
                 }
                 System.out.println("Không có rạp chiếu nào như trên, Vui lòng nhập lại");
             } while (true);
-            System.out.println("Bạn muốn sắp xếp bao nhiêu phim vào trong phòng chiếu trên");
-            int quantityMovie = new Scanner(System.in).nextInt();
+//            System.out.println("Bạn muốn sắp xếp bao nhiêu phim vào trong phòng chiếu trên");
+//            int quantityMovie = new Scanner(System.in).nextInt();
             List<ShowTimeMovie> showTimeMovieList = new ArrayList<>();
-            for (int j = 0; j < quantityMovie; j++) {
+//            for (int j = 0; j < quantityMovie; j++) {
                 if (logicMovie.movieList.isEmpty()) {
                         System.out.println("Chưa có bộ phim nào , Vui lòng thêm mới");
                         return;
                     }
-                    System.out.println("Nhập tên phim thứ " + (i + 1));
+                    System.out.println("Nhập tên phim thứ: ");
                     String nameMovie;
                     Movie movie;
                     do {
-                        nameMovie = new Scanner(System.in).nextLine();
+                        nameMovie =  new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
                     movie = logicMovie.searchMovie(nameMovie);
                     if (movie != null) {
                         break;
@@ -81,18 +83,16 @@ public class LogicShowTime {
                 LocalTime inputShowTime;
                 do {
                     try {
-                        timeInput = new Scanner(System.in).nextLine();
+                        timeInput =  new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
                         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                         inputShowTime = LocalTime.parse(timeInput, timeFormatter);
-                        if (showTimesList.isEmpty()){
-                            System.out.println("Thành công");
-                            break;
+                        if (timeInput.equalsIgnoreCase("exit")){
+                            return;
                         }
                         if (isAvailable(inputShowTime,name)){
-                            System.out.println("Thành công");
+                            System.out.println("Sắp xếp lịch chiếu thành công");
                             break;
                         }
-                        System.out.println(showTimesList);
                         System.out.println("Phòng đã có lịch chiếu vào thời điểm này, Vui lòng nhập lại giờ chiếu");
                     } catch (DateTimeException e) {
                         System.out.println("Đã sảy ra lỗi, vui lòng nhập lại");
@@ -100,7 +100,7 @@ public class LogicShowTime {
                 } while (true);
                 ShowTimeMovie showTimeMovie = new ShowTimeMovie(movie, inputShowTime);
                 showTimeMovieList.add(showTimeMovie);
-            }
+//            }
             ShowTimes showTimes = new ShowTimes(room, showTimeMovieList);
             showTimesList.add(showTimes);
             writeFileShowTimes(showTimesList);
@@ -131,50 +131,171 @@ public class LogicShowTime {
         }
     }
     public boolean isAvailable(LocalTime showTime,String name){
-        File file = new File("showtime.data");
-        if (file.exists()){
-            showTimesList=readFileShowTimes();
+        startReadFileShowTimes();
+        if (showTimesList.isEmpty()){
+            return true;
         }
+        boolean ketqua = false;
+        List<ShowTimes> showTimesCheck = new ArrayList<>();
         for (int i = 0; i < showTimesList.size(); i++) {
-            if (showTimesList.get(i).getRoom().getNameRoom().equalsIgnoreCase(name)){
-                LocalTime startTime = showTimesList.get(i).getShowTimeMovieList().get(i).getGiochieu();
-                LocalTime durationMovie = showTimesList.get(i).getShowTimeMovieList().get(i).getMovie().getMovieDuration();
+            if (name.equalsIgnoreCase(showTimesList.get(i).getRoom().getNameRoom())){
+                showTimesCheck.add(showTimesList.get(i));
+            }
+        }
+
+        if (showTimesCheck.isEmpty()){
+            ketqua = true;
+            return ketqua;
+        }
+        for (int i = 0; i < showTimesCheck.size(); i++) {
+            for (int j = 0; j < showTimesCheck.get(i).getShowTimeMovieList().size(); j++) {
+                LocalTime startTime = showTimesCheck.get(i).getShowTimeMovieList().get(j).getGiochieu();
+                LocalTime durationMovie = showTimesCheck.get(i).getShowTimeMovieList().get(j).getMovie().getMovieDuration();
                 LocalTime endTime = startTime.plusHours(durationMovie.getHour())
                         .plusMinutes(durationMovie.getMinute())
                         .plusSeconds(durationMovie.getSecond());
-                System.out.println(endTime);
-                if ( showTime.isAfter(endTime)) {
-                    return true;
+                if (showTime.isAfter(endTime)){
+                    ketqua = true;
                 }
             }
         }
-        return false;
+        return ketqua;
     }
     public void printShowtime(){
-        File file = new File("showtime.data");
-        if (file.exists()){
-            showTimesList=readFileShowTimes();
-        }
+        startReadFileShowTimes();
         if (showTimesList.isEmpty()){
             System.out.println("Chưa có lịch chiếu vui lòng thêm mới");
+            return;
+        }
+        System.out.println("----------- Lịch chiếu phim ----------");
+        System.out.println("1. Xem tất cả lịch chiếu");
+        System.out.println("2. Xem lịch chiếu của 1 phòng chiếu");
+        System.out.println("3. Trở lại");
+        int choice;
+        do {
+            try{
+                choice= new Scanner(System.in).nextInt();
+                if (choice > 0 && choice<4){
+                    break;
+                }
+                System.out.println("Đã xảy ra lỗi khi nhập dữ liệu \n Vui lòng nhập  lại");
+            }catch (InputMismatchException e){
+                System.out.println("Đã xảy ra lỗi khi nhập dữ liệu \n Vui lòng nhập  lại");
+            }
+
+        }while (true);
+        switch (choice){
+            case 1:
+                printAllShowTime();
+                break;
+            case 2:
+                printShowtimeARoom();
+                break;
+            case 3:
+                break;
+        }
+    }
+
+    private void printShowtimeARoom() {
+        startReadFileShowTimes();
+        System.out.println(showTimesList);
+        if (showTimesList.isEmpty()){
+            System.out.println("Chưa có lịch chiếu nào, Vui lòng thêm mới");
             return;
         }
         System.out.println("Nhập tên phòng mà bạn muốn xem");
         String name = new Scanner(System.in).nextLine();
         for (int i = 0; i < showTimesList.size(); i++) {
-            if (showTimesList.get(i).getRoom().getNameRoom().equalsIgnoreCase(name)){
-                System.out.println(showTimesList.get(i));
+            for (int j = 0; j < showTimesList.get(i).getShowTimeMovieList().size(); j++) {
+                if (showTimesList.get(i).getRoom().getNameRoom().equalsIgnoreCase(name)){
+                    System.out.println("***************************************************");
+                    System.out.println("Phòng chiếu: "+showTimesList.get(i).getRoom().getNameRoom());
+                    System.out.println("Tên phim : "+showTimesList.get(i).getShowTimeMovieList().get(j).getMovie().getNameMovie());
+                    System.out.println("Thể Loại: "+showTimesList.get(i).getShowTimeMovieList().get(j).getMovie().getTypeMovie());
+                    System.out.println("Giờ chiếu: "+showTimesList.get(i).getShowTimeMovieList().get(j).getGiochieu());
+                    System.out.println("Ngày chiếu: " + showTimesList.get(i).getShowTimeMovieList().get(j).getNgaychieu());
+                }
             }
         }
     }
+
+    private void printAllShowTime() {
+        startReadFileShowTimes();
+
+        for (int i = 0; i < showTimesList.size(); i++) {
+            for (int j = 0; j < showTimesList.get(i).getShowTimeMovieList().size(); j++) {
+                    System.out.println("***************************************************");
+                    System.out.println("Phòng chiếu: "+showTimesList.get(i).getRoom().getNameRoom());
+                    System.out.println("Tên phim : "+showTimesList.get(i).getShowTimeMovieList().get(j).getMovie().getNameMovie());
+                    System.out.println("Thể Loại: "+showTimesList.get(i).getShowTimeMovieList().get(j).getMovie().getTypeMovie());
+                    System.out.println("Giờ chiếu: "+showTimesList.get(i).getShowTimeMovieList().get(j).getGiochieu());
+                    System.out.println("Ngày chiếu: " + showTimesList.get(i).getShowTimeMovieList().get(j).getNgaychieu());
+            }
+        }
+    }
+
     public void startReadFileShowTimes(){
-        File file = new File("room.data");
+        File file = new File("showtime.data");
         if (file.exists()){
             showTimesList=readFileShowTimes();
         }
-        System.out.println(showTimesList);
     }
 
+    public void deleteShowTime() {
+        startReadFileShowTimes();
+        if (showTimesList.isEmpty()){
+            System.out.println("Chưa có lịch chiếu nào vui lòng thêm mới");
+            return;
+        }
+        System.out.println("Nhập tên Phòng chiếu và giờ chiếu mà bạn muốn xóa");
+        System.out.print("Tên phòng: ");
+        String name;
+        Room room = null;
+        logicRoom.startReadFileRoom();
+        do {
+             name =  new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
+            for (int i = 0; i < logicRoom.roomList.size(); i++) {
+                if (logicRoom.roomList.get(i).getNameRoom().equalsIgnoreCase(name)){
+                    room = logicRoom.roomList.get(i);
+                }
+            }
+            if (room!=null){
+                break;
+            }
+            if (name.equalsIgnoreCase("exit")){
+                return;
+            }
+            System.out.println("Chưa có phòng chiếu phim nào như trên , Vui lòng nhập lại");
+        }while (true);
+        System.out.println("Giờ chiếu: ");
+        String hour ;
+        LocalTime localTime;
+        do {
+           try {
+               hour =  new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
+               DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+               localTime = LocalTime.parse(hour,timeFormatter);
+               if (name.equalsIgnoreCase("exit")){
+                   return;
+               }
+               break;
+           }catch (DateTimeException e ){
+               System.out.println("Đã xảy ra lỗi khi nhập dữ liệu \nVui lòng nhập  lại");
+           }
+        }while (true);
+        for (int i = 0; i < showTimesList.size(); i++) {
+            for (int j = 0; j < showTimesList.get(i).getShowTimeMovieList().size(); j++) {
+                if (showTimesList.get(i).getRoom().getNameRoom().equalsIgnoreCase(name)
+                && showTimesList.get(i).getShowTimeMovieList().get(j).getGiochieu().equals(localTime)){
+                    showTimesList.remove(showTimesList.get(i));
+                    writeFileShowTimes(showTimesList);
+                    System.out.println("Xóa lịch chiếu thành công");
+                    return;
+                }
+            }
+        }
+        System.out.println("Phòng chiếu phim "+ name + " không có lịch chiếu nòa như trên" );
+    }
 }
 
 

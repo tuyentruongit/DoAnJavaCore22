@@ -2,25 +2,30 @@ package logichandle;
 
 import entity.User;
 
+import javax.imageio.plugins.tiff.TIFFDirectory;
+import javax.sound.midi.MidiFileFormat;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class LogicUser {
+//    LogicBuyMovieTicket logicBuyMovieTicket;
+    LogicMovie logicMovie;
     List<User> userList = new ArrayList<>();
     public void inputInforUser() {
-        File file = new File("account.data");
-        if (file.exists()){
-            userList=readFileUser();
-        }
+        startReadFileUser();
         User user = new User();
-        System.out.println(userList);
+        createAccount(user);
+        user.setIdUser(nextId());
+        user.infor();
+        userList.add(user);
+        writeFileUser(userList);
+    }
+
+    private void createAccount(User user) {
         System.out.print("Nhập tên đăng nhập của bạn : ");
         String accountName;
         do {
-            accountName = new Scanner(System.in).nextLine();
+            accountName = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
             if (userList.isEmpty()){
                 user.setAccountName(accountName);
                 break;
@@ -33,22 +38,18 @@ public class LogicUser {
         }while (true);
         do {
             System.out.print("Nhập mật khẩu của bạn : ");
-            String password = new Scanner(System.in).nextLine();
+            String password =new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
             System.out.print("Nhập lại mật khẩu của bạn : ");
-            String retypePassword = new Scanner(System.in).nextLine();
+            String retypePassword =new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
             if (password.compareTo(retypePassword)==0){
                 user.setPassword(password);
                 break;
             }
             System.out.println("Mật khẩu không khớp vui lòng nhập lại");
         }while (true);
-        user.infor();
-        userList.add(user);
-        writeFileUser(userList);
-        System.out.println(userList);//in ra để xem lúc ghi xuống File ghi những gì.
     }
-
     private boolean searchAccount(String accountName) {
+        startReadFileUser();
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getAccountName().equalsIgnoreCase(accountName)){
                 return false;
@@ -101,10 +102,7 @@ public class LogicUser {
     }
 
     public void searchClient() {
-        File file = new File("account.data");
-        if (file.exists()){
-            userList=readFileUser();
-        }
+        startReadFileUser();
         System.out.println("Nhập tên khách hàng mà bạn muốn tìm kiếm");
         String name = new Scanner(System.in).nextLine();
         for (int i = 0; i < userList.size(); i++) {
@@ -150,13 +148,13 @@ public class LogicUser {
         String passwordNew1;
         do {
             System.out.println("Nhập tên đăng nhập ");
-             name = new Scanner(System.in).nextLine();
+             name = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
             System.out.println("Nhập mật khẩu cũ ");
-             passwordOld =  new Scanner(System.in).nextLine();
+             passwordOld = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
             System.out.println("Nhập mật khẩu mới");
-             passwordNew =  new Scanner(System.in).nextLine();
+             passwordNew = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
             System.out.println("Nhập lại mật khẩu mới");
-             passwordNew1=  new Scanner(System.in).nextLine();
+             passwordNew1=  new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
             for (int i = 0; i <userList.size() ; i++) {
                 if (userList.get(i).getAccountName().equals(name)){
                     if ((userList.get(i).getPassword().equals(passwordOld) && passwordNew.equals(passwordNew1))){
@@ -174,13 +172,17 @@ public class LogicUser {
 
 
     }
-    public void nextId(int nextID){
+    public int nextId(){
         startReadFileUser();
+        int a = 10000;
         for (int i = 0; i < userList.size(); i++) {
-            if (nextID==userList.get(i).getIdUser()){
-                nextID++;
+            for (int j = 10000; j <99999 ; j++) {
+                if (j==userList.get(i).getIdUser()){
+                    break;
+                }
+                a=i;
             }
-
         }
+        return a;
     }
 }

@@ -4,10 +4,10 @@ import statics.Gender;
 
 import java.io.Serializable;
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class User extends Person implements InputInfor, Serializable {
-    private static int nextIdUser = 10000;
     private int idUser;
     protected String name ;
     private int ago;
@@ -15,12 +15,6 @@ public class User extends Person implements InputInfor, Serializable {
     private String phone ;
     private Gender gender;
 
-
-
-    public User() {
-        this.idUser=nextIdUser;
-        nextIdUser++;
-    }
 
     public int getIdUser() {
         return idUser;
@@ -71,9 +65,6 @@ public class User extends Person implements InputInfor, Serializable {
         this.gender = gender;
     }
 
-    public static void setNextIdUser(int nextIdUser) {
-        User.nextIdUser = nextIdUser;
-    }
 
     @Override
     public String toString() {
@@ -125,22 +116,6 @@ public class User extends Person implements InputInfor, Serializable {
             return true;
         }
         return false;
-    }
-
-    public void createAcccount(){
-        System.out.print("Nhập tên đăng nhập của bạn : ");
-        this.setAccountName(new Scanner(System.in).nextLine());
-        do {
-            System.out.print("Nhập mật khẩu của bạn : ");
-            String password = new Scanner(System.in).nextLine();
-            System.out.print("Nhập lại mật khẩu của bạn : ");
-            String retypePassword = new Scanner(System.in).nextLine();
-            if (password.compareTo(retypePassword)==0){
-                this.setPassword(password);
-                break;
-            }
-            System.out.println("Mật khẩu không khớp vui lòng nhập lại");
-        }while (true);
     }
 
     private void choiceGender() {

@@ -73,7 +73,7 @@ public class Movie implements InputInfor, Serializable {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(float  price) {
         this.price = price;
     }
 
@@ -155,10 +155,10 @@ public class Movie implements InputInfor, Serializable {
         this.setManufacturer(new Scanner(System.in).nextLine());
         System.out.println("Nhập giá của bộ Phim");
         this.setPrice( new Scanner(System.in).nextFloat());
-        System.out.println("Nhập năm xuất bản của bộ Phim (yyyy-MM-dd): ");
+        System.out.println("Nhập năm xuất bản của bộ Phim (yyyy/MM/dd): ");
         do {
             try{
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                 String dateInput = new Scanner(System.in).nextLine();
                 this.publishYear= LocalDate.parse(dateInput, dateFormatter);
                 break;

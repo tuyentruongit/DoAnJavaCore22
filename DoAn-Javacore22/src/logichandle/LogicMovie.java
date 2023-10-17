@@ -32,6 +32,7 @@ public class LogicMovie {
         System.out.println("Không có tên phim nào như trên");
     }
     public Movie searchMovie(String nameMovie) {
+        statrReadFileMovie();
         for (int i = 0; i < movieList.size(); i++) {
             if (nameMovie.equalsIgnoreCase(movieList.get(i).getNameMovie())){
                 return movieList.get(i);
@@ -41,10 +42,7 @@ public class LogicMovie {
     }
 
     public void printMovie() {
-        File file = new File("movie.data");
-        if (file.exists()){
-            movieList=readFileMovie();
-        }
+      statrReadFileMovie();
         if (movieList.isEmpty()){
             System.out.println("Chưa có phim nào, Vui lòng thếm mới");
         }
@@ -64,10 +62,7 @@ public class LogicMovie {
 
 
     public void addMovie() {
-        File file = new File("movie.data");
-        if (file.exists()){
-            movieList=readFileMovie();
-        }
+        statrReadFileMovie();
         System.out.println("Bạn muốn thêm bao nhiêu bộ phim mới");
         int quantity ;
         do {
@@ -96,7 +91,6 @@ public class LogicMovie {
         }
     }
     public    List<Movie>   readFileMovie()  {
-
         ObjectInputStream readFile = null;
         try {
             readFile = new ObjectInputStream(new FileInputStream("movie.data"));
@@ -111,32 +105,28 @@ public class LogicMovie {
     }
 
     public void deleteMovie() {
+        statrReadFileMovie();
         if (movieList.isEmpty()){
             System.out.println("Chưa có  phim nào, Vui lòng thêm mới");
             return;
         }
-        System.out.println(movieList);
         System.out.println("Nhập tên phim mà bạn muốn xóa");
-        String delete = new Scanner(System.in).nextLine();
+        String delete = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
         for (int i = 0; i < movieList.size(); i++) {
-            String name = String.valueOf(movieList.get(i));
             if (delete.equalsIgnoreCase(movieList.get(i).getNameMovie())){
-                movieList.remove(name);
+                movieList.remove(movieList.get(i));
                 writeFileMovie(movieList);
                 System.out.println(" Phim "+delete+" đã bị xóa");
                 break;
             }
-            System.out.println("Phim trên không tồn tại trong rạp");
         }
+        System.out.println("Phim trên không tồn tại trong rạp");
     }
 
     public void searchByTypeMovie() {
-        File file = new File("movie.data");
-        if (file.exists()){
-            movieList=readFileMovie();
-        }
+      statrReadFileMovie();
         System.out.println("Nhập thể loại phim mà bạn muốn tìm kiếm");
-        String nameTypemovie = new Scanner(System.in).nextLine();
+        String nameTypemovie =new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
         for (int i = 0; i < movieList.size(); i++) {
             if (movieList.get(i).getTypeMovie().equals(nameTypemovie)){
                 System.out.println("***************************************************");
@@ -158,6 +148,5 @@ public class LogicMovie {
         if (file.exists()){
             movieList=readFileMovie();
         }
-        System.out.println(movieList);
     }
 }

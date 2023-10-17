@@ -29,6 +29,7 @@ public class LogicRoom {
             }
         }while (true);
         for (int i = 0; i < quantity; i++) {
+           System.out.println("Nhập thông tin của phòng chiếu thứ "+ (i+1));
             Room room = new Room();
             room.infor();
             roomList.add(room);
@@ -64,15 +65,13 @@ public class LogicRoom {
             System.out.println("Chưa có  Phòng chiếu nào, Vui lòng thêm mới");
             return;
         }
-        System.out.println(roomList);
         System.out.println("Nhập tên phòng chiếu mà bạn muốn xóa");
-        String delete = new Scanner(System.in).nextLine();
+        String delete = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
         for (int i = 0; i < roomList.size(); i++) {
-            String name = String.valueOf(roomList.get(i));
             if (delete.equalsIgnoreCase(roomList.get(i).getNameRoom())){
-                roomList.remove(name);
+                roomList.remove(roomList.get(i));
                 writeFileRoom(roomList);
-                System.out.println(" Phòng chiếu "+delete+" đã bị xóa");
+                System.out.println("Phòng chiếu "+delete+" đã bị xóa");
                 break;
             }
             System.out.println("Phòng chiếu không tồn tại trong rạp");
@@ -80,13 +79,19 @@ public class LogicRoom {
     }
 
     public void searchRoom() {
+        startReadFileRoom();
         System.out.println("Nhập tên phòng chiếu mà bạn muốn tìm");
-        String name = new Scanner(System.in).nextLine();
+        String name = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
         for (int i = 0; i < roomList.size(); i++) {
             if (roomList.get(i).getNameRoom().equalsIgnoreCase(name)){
-                System.out.println(roomList.get(i));
+                System.out.println("***************************************************");
+                System.out.println("Tên: "+roomList.get(i).getNameRoom());
+                System.out.println("Sức chứa: "+roomList.get(i).getCapacity());
+                System.out.println("***************************************************");
+                return;
             }
         }
+        System.out.println("Phòng chiếu bạn vừa nhập không tồn tại trong rạp");
     }
 
     public Room searchRoombyShowTime(String name) {
@@ -103,6 +108,5 @@ public class LogicRoom {
         if (file.exists()){
             roomList=readFileRoom();
         }
-        System.out.println(roomList);
     }
 }
