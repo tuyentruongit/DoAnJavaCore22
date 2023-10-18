@@ -85,7 +85,20 @@ public class User extends Person implements InputInfor, Serializable {
         System.out.println("Nhập tên của bạn : ");
         this.setName(new Scanner(System.in).nextLine());
         System.out.println("Nhập tuổi của bạn : ");
-        this.setAgo(new Scanner(System.in).nextInt());
+        int ago ;
+        do {
+            try{
+                ago = new Scanner(System.in).nextInt();
+                if (ago>0 && ago<130){
+                    this.setAgo(ago);
+                    break;
+                }
+                System.out.println("Không có ai sống thọ hơn 130 tuổi, Vui lòng nhập lại tuổi của bạn");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Dữ liệu bạn vừa nhập không đúng, Vui lòng nhập lại :");
+            }
+        }while (true);
         System.out.println("Nhập địa chỉ  của bạn : ");
         this.setAddress(new Scanner(System.in).nextLine());
         System.out.println("Nhập số điện thoại của bạn : ");

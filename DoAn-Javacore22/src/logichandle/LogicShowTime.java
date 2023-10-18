@@ -219,7 +219,7 @@ public class LogicShowTime {
         }
     }
 
-    private void printAllShowTime() {
+    public void printAllShowTime() {
         startReadFileShowTimes();
 
         for (int i = 0; i < showTimesList.size(); i++) {
@@ -295,6 +295,20 @@ public class LogicShowTime {
             }
         }
         System.out.println("Phòng chiếu phim "+ name + " không có lịch chiếu nòa như trên" );
+    }
+
+    public ShowTimes  searchShowTimeForUser(String nameRoom, String nameMovie ,LocalTime localTime ) {
+        ShowTimes showTimes = null;
+        for (int i = 0; i < showTimesList.size(); i++) {
+            for (int j = 0; j < showTimesList.get(i).getShowTimeMovieList().size(); j++) {
+                if (showTimesList.get(i).getShowTimeMovieList().get(j).getGiochieu().equals(localTime)
+                && showTimesList.get(i).getShowTimeMovieList().get(j).getMovie().getNameMovie().equalsIgnoreCase(nameMovie)
+                && showTimesList.get(i).getRoom().getNameRoom().equalsIgnoreCase(nameRoom)){
+                    showTimes=showTimesList.get(i);
+                }
+            }
+        }
+        return showTimes;
     }
 }
 

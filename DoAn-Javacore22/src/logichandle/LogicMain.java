@@ -1,10 +1,13 @@
 package logichandle;
 
-import entity.Admin;
-import entity.Movie;
-import entity.User;
+import entity.*;
 
+import java.time.DateTimeException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class LogicMain {
@@ -14,9 +17,7 @@ public class LogicMain {
     LogicTypeMove logicTypeMove = new LogicTypeMove();
     LogicRoom logicRoom = new LogicRoom();
     LogicShowTime logicShowTime = new LogicShowTime(logicRoom,logicMovie);
-    LogicBuyMovieTicket logicBuyMovieTicket = new LogicBuyMovieTicket();
-
-
+    List<BuyMovieTicket> buyMovieTicketList = new ArrayList<>();
     public void run(){
 
         logInAndCreateAccount();
@@ -212,21 +213,9 @@ public class LogicMain {
         }
     }
 
-    private void printAllMovie() {
-        logicMovie.printMovie();
-    }
-
     public   void menuUser(){
         while (true){
-            System.out.println("***************************************************");
-            System.out.println("*                     Trang Chủ                   *");
-            System.out.println("***************************************************");
-            System.out.println("1. Tìm kiếm phim ");
-            System.out.println("2. Tìm Kiếm theo thể loại phim");
-            System.out.println("3. Tất cả Phim ");
-            System.out.println("4. Đặt vé ");
-            System.out.println("5. Tài Khoản");
-            while (true){
+            printMenu();
                 int chcoiceFuntion = 0;
                 do {
                     try {
@@ -251,15 +240,31 @@ public class LogicMain {
                         logicMovie.printMovie();
                         break;
                     case 4:
-                        logicBuyMovieTicket.bookTickets();
+                        bookTickets();
                         break;
                     case 5:
                         logicUser.inforAccount();
                         break;
+                    case 6:
+                        logIn();
+                        return;
                 }
-            }
+
         }
     }
+
+    private void printMenu() {
+        System.out.println("***************************************************");
+        System.out.println("*                     Trang Chủ                   *");
+        System.out.println("***************************************************");
+        System.out.println("1. Tìm kiếm phim ");
+        System.out.println("2. Tìm Kiếm theo thể loại phim");
+        System.out.println("3. Tất cả Phim ");
+        System.out.println("4. Đặt vé ");
+        System.out.println("5. Tài Khoản");
+        System.out.println("6. Đăng xuât");
+    }
+
     public void menuRoom() {
         while (true) {
             System.out.println("----------- Quản Lý Phòng chiếu ----------");
@@ -307,6 +312,149 @@ public class LogicMain {
             }
         }
     }
+    public void bookTickets() {
+        logicShowTime.readFileShowTimes();
+        System.out.println("Dưới đây là lịch chiều của các bộ phim hiện có trong rạp");
+        logicShowTime.printAllShowTime();
+        ShowTimes showTimes = chonphimlichchieu();
+        float priceMovie = showTimes.getShowTimeMovieList().get(0).getMovie().getPrice();
+        System.out.println("Nhập số lượng vé mà bạn muốn mua");
+        int numberTicket ;
+        do {
+            try {
+                numberTicket = new Scanner(System.in).nextInt();
+                break;
+            }catch (InputMismatchException e ){
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+            }
+        }while (true);
+        System.out.println("Bạn có muốn dùng thêm đồ ăn/uống không?");
+        System.out.print("1. Có");
+        System.out.println("2. Không");
+        int choiceEatDrink ;
+        do {
+            try {
+                choiceEatDrink = new Scanner(System.in).nextInt();
+                if (choiceEatDrink>0 && choiceEatDrink<3){
+                    break;
+                }
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+            }catch (InputMismatchException e ){
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+            }
+        }while (true);
+        float  sum =0;
+        BuyMovieTicket buyMovieTicket = null;
+        ServiceDetail serviceDetail = null;
+        switch (choiceEatDrink){
+            case 1:
+                System.out.println("Dưới đây là những đồ ăn / uống có trong rạp");
+                logicAdmin.logicService.printAllService();
+                System.out.println("Bạn muốn dùng đồ ăn / uống nào ");
+                String nameService;
+                Service service;
+               do {
+                    nameService = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
+                    service = logicAdmin.logicService.searchServiceForBuyTickets(nameService);
+                   if (service!= null){
+                       break;
+                   }
+                   System.out.println("Không có đồ ăn / uống nào như trên");
+               }while (true);
+                System.out.println("Nhập số lượng đồ ăn / uống bạn muốn mua");
+                int number;
+                do {
+                    try {
+                        number= new Scanner(System.in).nextInt();
+                        break;
+                    }catch (InputMismatchException e){
+                        System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+                    }
+                }while (true);
+                serviceDetail = new ServiceDetail(number,service);
+                buyMovieTicket = new BuyMovieTicket(numberTicket,showTimes,serviceDetail,sum);
+                sum = (priceMovie * numberTicket)+(number*service.getPrice());
+                break;
+            case 2:
+                 sum = priceMovie * numberTicket;
+                 buyMovieTicket = new BuyMovieTicket(numberTicket,showTimes,sum);
+                break;
+        }
+        System.out.println("Tổng tiền bạn phải thanh toán là "+sum+" VND");
+        System.out.println("1. Thanh toán");
+        System.out.println("2.Trở lại");
+        int choice ;
+        do {
+            try {
+                choice = new Scanner(System.in).nextInt();
+                if (choice>0 && choice<3){
+                    break;
+                }
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+            }catch (InputMismatchException e ){
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+            }
+        }while (true);
+        switch (choice){
+            case 1:
+                if (serviceDetail==null){
+                    System.out.println("Tên phim: "+ showTimes.getShowTimeMovieList().get(0).getMovie().getNameMovie());
+                    System.out.println("Khởi chiếu: "+showTimes.getShowTimeMovieList().get(0).getMovie().getPublishYear());
+                    System.out.println("Phòng chiếu: "+showTimes.getRoom().getNameRoom());
+                    System.out.println("Giờ Chiếu: "+showTimes.getShowTimeMovieList().get(0).getGiochieu());
+                    System.out.println("Số lượng vé: "+buyMovieTicket.getTotalAmount());
+                    System.out.println("Đồ ăn / uống: Không");
+                    System.out.println("Thanh toán: QRPay");
+                    System.out.println("Tổng tiền: "+sum);
+                   break;
+                }
+                System.out.println("Tên phim: "+ showTimes.getShowTimeMovieList().get(0).getMovie().getNameMovie());
+                System.out.println("Khởi chiếu: "+showTimes.getShowTimeMovieList().get(0).getMovie().getPublishYear());
+                System.out.println("Phòng chiếu: "+showTimes.getRoom().getNameRoom());
+                System.out.println("Giờ Chiếu: "+showTimes.getShowTimeMovieList().get(0).getGiochieu());
+                System.out.println("Số lượng vé: "+buyMovieTicket.getTotalAmount());
+                System.out.println("Đồ ăn / uống: "+serviceDetail.getService().getName()+"  Số lượng: "+serviceDetail.getQuantity());
+                System.out.println("Thanh toán: QRPay");
+                System.out.println("Tổng tiền: "+sum);
+                for (int i = 0; i < logicAdmin.logicService.serviceList.size(); i++) {
+                    if (serviceDetail.getService().getName().equalsIgnoreCase(logicAdmin.logicService.serviceList.get(i).getName())){
+                        logicAdmin.logicService.serviceList.get(i).setRemainingQuantity(logicAdmin.logicService.serviceList.get(i).getRemainingQuantity()- serviceDetail.getQuantity());
+                        logicAdmin.logicService.writeFileService(logicAdmin.logicService.serviceList);
+                    }
+                }
+                System.out.println("Thanh toán thành công");
+                break;
+            case 2:
+                break;
+        }
+    }
+
+    private ShowTimes chonphimlichchieu() {
+        System.out.println("Nhập tên phòng mà bạn muốn xem");
+        String nameRoom = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
+        System.out.println("Bạn muốn đặt vé xem bộ phim nào ?");
+        String nameMovie =new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
+        logicMovie.searchMovie(nameMovie);
+        System.out.println("Chọn giờ chiếu mà bạn muốn xem");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalTime showtime ;
+        String timeInput;
+        do {
+            try{
+                timeInput= new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
+                showtime = LocalTime.parse(timeInput,timeFormatter);
+                break;
+            }catch (DateTimeException e){
+                System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
+            }
+        }while (true);
+        ShowTimes showTimes = logicShowTime.searchShowTimeForUser(nameRoom,nameMovie,showtime);
+        if (showTimes==null){
+            System.out.println("Không có phòng chiếu "+nameRoom+" chiếu bộ phim "+nameMovie+" vào khung giờ "+timeInput);
+        }
+        return showTimes;
+    }
+
 }
 
 

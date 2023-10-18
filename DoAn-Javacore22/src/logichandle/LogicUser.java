@@ -113,31 +113,30 @@ public class LogicUser {
     }
 
     public void inforAccount() {
-        System.out.println("-------------- Tài Khoản -------------");
-        System.out.println("1. Đổi mật khẩu ");
-        System.out.println("2. Đăng Xuất");
-        System.out.println("3. Trở Lại");
-        System.out.println("Bạn vui lòng chọn những chức năng trên");
-        int choice;
-        do {
-            try {
-                choice = new Scanner(System.in).nextInt();
-                if (choice>0 && choice <4){
-                    break;
+        while (true){
+            System.out.println("-------------- Tài Khoản -------------");
+            System.out.println("1. Đổi mật khẩu ");
+            System.out.println("2. Trở Lại");
+            System.out.println("Bạn vui lòng chọn những chức năng trên");
+            int choice;
+            do {
+                try {
+                    choice = new Scanner(System.in).nextInt();
+                    if (choice>0 && choice <4){
+                        break;
+                    }
+                    System.out.println("Vui lòng nhập lại dữ liệu");
+                }catch (InputMismatchException e){
+                    System.out.println("Vui lòng nhập lại dữ liệu");
                 }
-                System.out.println("Vui lòng nhập lại dữ liệu");
-            }catch (InputMismatchException e){
-                System.out.println("Vui lòng nhập lại dữ liệu");
+            }while (true);
+            switch (choice){
+                case 1:
+                    changePassword();
+                    break;
+                case 2:
+                    return;
             }
-        }while (true);
-        switch (choice){
-            case 1:
-                changePassword();
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
         }
     }
 
@@ -159,8 +158,9 @@ public class LogicUser {
                 if (userList.get(i).getAccountName().equals(name)){
                     if ((userList.get(i).getPassword().equals(passwordOld) && passwordNew.equals(passwordNew1))){
                         userList.get(i).setPassword(passwordNew);
+                        writeFileUser(userList);
                         System.out.println("Đổi Mật khẩu Thành công");
-                        break;
+                        return;
                     }
 
                 }if (!userList.get(i).getAccountName().equals(name)){

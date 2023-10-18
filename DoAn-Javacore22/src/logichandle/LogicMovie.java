@@ -28,6 +28,7 @@ public class LogicMovie {
             System.out.println("Năm sản xuất: "+ movie.getPublishYear());;
             System.out.println("Giá tiền: "+ movie.getPrice()+ " VND");;
             System.out.println("***************************************************");
+            return;
         }
         System.out.println("Không có tên phim nào như trên");
     }
@@ -45,6 +46,7 @@ public class LogicMovie {
       statrReadFileMovie();
         if (movieList.isEmpty()){
             System.out.println("Chưa có phim nào, Vui lòng thếm mới");
+            return;
         }
         for (int i = 0; i < movieList.size(); i++) {
             System.out.println("***************************************************");
@@ -128,7 +130,7 @@ public class LogicMovie {
         System.out.println("Nhập thể loại phim mà bạn muốn tìm kiếm");
         String nameTypemovie =new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
         for (int i = 0; i < movieList.size(); i++) {
-            if (movieList.get(i).getTypeMovie().equals(nameTypemovie)){
+            if (movieList.get(i).getTypeMovie().value.equalsIgnoreCase(nameTypemovie)){
                 System.out.println("***************************************************");
                 System.out.println("Tên phim: "+movieList.get(i) .getNameMovie());
                 System.out.println("Thể Loại: "+ movieList.get(i).getTypeMovie().value);;
@@ -141,7 +143,7 @@ public class LogicMovie {
                 System.out.println("***************************************************");
             }
         }
-        System.out.println("Không có thể loại phim nào như bạn đã nhập");
+        System.out.println("Hiện tại rạp chưa có thể loại phim "+ nameTypemovie + " như bạn đã nhập");
     }
     public void statrReadFileMovie(){
         File file = new File("movie.data");

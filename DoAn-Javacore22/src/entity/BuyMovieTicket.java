@@ -1,18 +1,29 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.PrimitiveIterator;
 
 public class BuyMovieTicket implements Serializable {
     private int totalAmount;
     private ShowTimes showTimes;
+    private ServiceDetail serviceDetails;
+    private float toatlPrice;
 
-    public BuyMovieTicket(int totalAmount, ShowTimes showTimes) {
+    public BuyMovieTicket(int totalAmount, ShowTimes showTimes, float toatlPrice) {
         this.totalAmount = totalAmount;
         this.showTimes = showTimes;
+        this.toatlPrice = toatlPrice;
     }
 
-    public float getTotalAmount() {
+    public BuyMovieTicket(int totalAmount, ShowTimes showTimes,ServiceDetail serviceDetails, float toatlPrice) {
+        this.totalAmount = totalAmount;
+        this.showTimes = showTimes;
+        this.serviceDetails = serviceDetails;
+        this.toatlPrice = toatlPrice;
+    }
+
+    public int getTotalAmount() {
         return totalAmount;
     }
 

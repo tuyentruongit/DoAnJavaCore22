@@ -10,6 +10,7 @@ public class Service implements Serializable,InputInfor {
     private String name ;
     private float price;
     private TypeService typeService;
+    private int remainingQuantity;
 
     public TypeService getTypeService() {
         return typeService;
@@ -35,6 +36,13 @@ public class Service implements Serializable,InputInfor {
         this.price = price;
     }
 
+    public int getRemainingQuantity() {
+        return remainingQuantity;
+    }
+
+    public void setRemainingQuantity(int remainingQuantity) {
+        this.remainingQuantity = remainingQuantity;
+    }
 
     @Override
     public String toString() {
@@ -76,5 +84,14 @@ public class Service implements Serializable,InputInfor {
                 this.setTypeService(TypeService.DRINK);
                 break;
         }
+        System.out.println("Nhập số lượng của đồ ăn / uống trên");
+        do {
+            try {
+                this.setRemainingQuantity(new Scanner(System.in).nextInt());
+                break;
+            }catch (InputMismatchException e){
+                System.out.println("Dữ liệu nhập vào không hợp lệ, Vui lòng nhập lại");
+            }
+        }while (true);
     }
 }

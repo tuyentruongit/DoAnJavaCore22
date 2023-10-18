@@ -13,10 +13,7 @@ public class LogicService {
     List<Service> serviceList = new ArrayList<>();
 
     public void addService() {
-        File file = new File("Service.data");
-        if (file.exists()){
-            serviceList=readFileService();
-        }
+        startFileService();
         System.out.println("Bạn muốn thêm bao nhiêu loại đồ ăn / uống");
         int quantity = 0;
         do {
@@ -61,10 +58,7 @@ public class LogicService {
     }
 
     public void deleteService() {
-        File file = new File("Service.data");
-        if (file.exists()){
-            serviceList=readFileService();
-        }
+        startFileService();
         if (serviceList.isEmpty()){
             System.out.println("Chưa có dịch vụ nào vui lòng thêm mới");
             return;
@@ -84,10 +78,7 @@ public class LogicService {
     }
 
     public void printAllService() {
-        File file = new File("Service.data");
-        if (file.exists()){
-            serviceList=readFileService();
-        }
+        startFileService();
         if (serviceList.isEmpty()){
             System.out.println("Chưa có dịch vụ nào , Vui lòng thêm mới");
             return;
@@ -95,20 +86,23 @@ public class LogicService {
         System.out.println("Đồ uống :");
         for (int i = 0; i < serviceList.size(); i++) {
            if (serviceList.get(i).getTypeService().value.equalsIgnoreCase("Đồ uống")){
-               System.out.print("Tên: "+serviceList.get(i).getName());
+               System.out.print("Tên: "+serviceList.get(i).getName() +" ");
                System.out.println("Giá: "+serviceList.get(i).getPrice()+" VND");
+               System.out.println("Số lượng còn lại: "+serviceList.get(i).getRemainingQuantity());
            }
         }
         System.out.println("Đồ ăn :");
         for (int i = 0; i < serviceList.size(); i++) {
             if (serviceList.get(i).getTypeService().value.equalsIgnoreCase("Đồ ăn")) {
-                System.out.print("Tên: " + serviceList.get(i).getName());
+                System.out.print("Tên: "+serviceList.get(i).getName() +" ");
                 System.out.println("Giá: " + serviceList.get(i).getPrice() + " VND");
+                System.out.println("Số lượng còn lại: "+serviceList.get(i).getRemainingQuantity());
             }
         }
     }
 
     public void searchService() {
+        startFileService();
         if (serviceList.isEmpty()){
             System.out.println("Chưa có dịch vụ nào , Vui lòng thêm mới");
             return;
@@ -123,5 +117,21 @@ public class LogicService {
             }
         }
         System.out.println("Không có dịch vụ bạn vừa nhập");
+    }
+
+    public Service searchServiceForBuyTickets(String nameService) {
+        startFileService();
+        for (int i = 0; i < serviceList.size(); i++) {
+          if (serviceList.get(i).getName().equalsIgnoreCase(nameService)){
+              return serviceList.get(i);
+          }
+        }
+        return null;
+    }
+    public void startFileService(){
+        File file = new File("Service.data");
+        if (file.exists()){
+            serviceList=readFileService();
+        }
     }
 }
