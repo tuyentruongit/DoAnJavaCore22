@@ -201,47 +201,6 @@ public class LogicBuyMovieTicket {
         ServiceDetail serviceDetail = new ServiceDetail(number,service);
         return serviceDetail;
     }
-//    private ShowTimes chonphimlichchieu() {
-//        ShowTimes showTimes;
-////        while (true){
-////            System.out.println("Nhập tên phòng mà bạn muốn xem");
-////            String nameRoom = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
-////            System.out.println("Bạn muốn đặt vé xem bộ phim nào ?");
-////            String nameMovie =new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
-////            logicMovie.searchMovie(nameMovie);
-////            System.out.println("Chọn giờ chiếu mà bạn muốn xem");
-////            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-////            LocalTime showtime ;
-////            String timeInput;
-////            do {
-////                try{
-////                    timeInput= new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
-////                    showtime = LocalTime.parse(timeInput,timeFormatter);
-////                    break;
-////                }catch (DateTimeException e){
-////                    System.out.println("Dữ liệu bạn vừa nhập không hợp lệ , vui lòng nhập lại");
-////                }
-////            }while (true);
-////            showTimes = logicShowTime.searchShowTimeForUser(nameRoom,nameMovie,showtime);
-////            int capacity = 0;
-////            for (int i = 0; i < buyMovieTicketList.size(); i++) {
-////                for (int j = 0; j < buyMovieTicketList.get(i).getShowTimes().getShowTimeMovieList().size(); j++) {
-////                    if (buyMovieTicketList.get(i).getShowTimes().getRoom().getNameRoom().equalsIgnoreCase(nameRoom)
-////                            &&(buyMovieTicketList.get(i).getShowTimes().getShowTimeMovieList().get(j).getMovie().getNameMovie().equalsIgnoreCase(nameMovie)
-////                            &&buyMovieTicketList.get(i).getShowTimes().getShowTimeMovieList().get(j).getGiochieu().equals(showtime))){
-////                        capacity+=buyMovieTicketList.get(i).getTotalAmount();
-////                    }
-////                }
-////            }if (capacity>showTimes.getRoom().getCapacity()){
-////                System.out.println("Phòng chiếu trên đã đầy vui lo");
-////            }
-////            if (showTimes!=null){
-////              break;
-////            }
-////            System.out.println("Không có phòng chiếu "+nameRoom+" chiếu bộ phim "+nameMovie+" vào khung giờ "+timeInput);
-////        }
-////        return showTimes;
-//    }
     private void startReadFileBuyMovieTicket() {
         File file = new File("buyMovieTicket.data");
         if (file.exists()){
