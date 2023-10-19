@@ -111,7 +111,7 @@ public class Movie implements InputInfor, Serializable {
     @Override
     public void infor() {
         System.out.println("Nhập tên của bộ Phim");
-        this.setNameMovie(new Scanner(System.in).nextLine());
+        this.setNameMovie(new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " "));
         System.out.println("Nhập thể loại của bộ Phim");
         System.out.println("1. Phim Hoạt Hình ");
         System.out.println("2. Phim Hài ");
@@ -148,18 +148,18 @@ public class Movie implements InputInfor, Serializable {
         }
 
         System.out.println("Nhập đạo diễn của bộ Phim");
-        this.setDirector(new Scanner(System.in).nextLine());
+        this.setDirector(new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " "));
         System.out.println("Nhập diễn viên của bộ Phim");
-        this.setPerformer(new Scanner(System.in).nextLine());
+        this.setPerformer(new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " "));
         System.out.println("Nhập hãng sản xuất của bộ Phim");
-        this.setManufacturer(new Scanner(System.in).nextLine());
+        this.setManufacturer(new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " "));
         System.out.println("Nhập giá của bộ Phim");
         this.setPrice( new Scanner(System.in).nextFloat());
         System.out.println("Nhập năm xuất bản của bộ Phim (yyyy/MM/dd): ");
         do {
             try{
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-                String dateInput = new Scanner(System.in).nextLine();
+                String dateInput = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
                 this.publishYear= LocalDate.parse(dateInput, dateFormatter);
                 break;
             }catch (DateTimeParseException | NullPointerException | UnsupportedTemporalTypeException e){
@@ -171,7 +171,7 @@ public class Movie implements InputInfor, Serializable {
         System.out.println("Nhập thời lượng của bộ Phim (HH:mm:ss)");
         do {
             try{
-                String timeInput = new Scanner(System.in).nextLine();
+                String timeInput = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");
                 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                 this.movieDuration = LocalTime.parse(timeInput, timeFormatter);
                 break;

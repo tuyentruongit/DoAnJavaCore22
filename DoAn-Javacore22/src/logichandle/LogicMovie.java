@@ -14,6 +14,7 @@ public class LogicMovie {
     List<Movie> movieList = new ArrayList<>();
 
     public void searchMovieForUser() {
+        statrReadFileMovie();
         System.out.println("Nhập tên phim mà bạn muốn tìm ");
         String nameMovie = new Scanner(System.in).nextLine();
         Movie movie = searchMovie(nameMovie);
@@ -118,8 +119,8 @@ public class LogicMovie {
             if (delete.equalsIgnoreCase(movieList.get(i).getNameMovie())){
                 movieList.remove(movieList.get(i));
                 writeFileMovie(movieList);
-                System.out.println(" Phim "+delete+" đã bị xóa");
-                break;
+                System.out.println("Phim "+delete+" đã bị xóa");
+                return;
             }
         }
         System.out.println("Phim trên không tồn tại trong rạp");
@@ -141,6 +142,7 @@ public class LogicMovie {
                 System.out.println("Năm sản xuất: "+ movieList.get(i).getPublishYear());;
                 System.out.println("Giá tiền: "+ movieList.get(i).getPrice()+ " VND");;
                 System.out.println("***************************************************");
+                return;
             }
         }
         System.out.println("Hiện tại rạp chưa có thể loại phim "+ nameTypemovie + " như bạn đã nhập");

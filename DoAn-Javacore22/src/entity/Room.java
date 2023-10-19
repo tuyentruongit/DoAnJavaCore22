@@ -34,7 +34,7 @@ public class Room implements Serializable {
 
     public void infor() {
         System.out.println("Nhập tên của phòng chiếu ");
-        this.setNameRoom(new Scanner(System.in).nextLine());
+        this.setNameRoom(new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " "));
         do {
             System.out.println("Nhập sức chứa phòng chiếu ");
             try{

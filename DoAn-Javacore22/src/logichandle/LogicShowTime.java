@@ -23,8 +23,6 @@ public class LogicShowTime {
         this.logicMovie = logicMovie;
     }
 
-
-
     public void sortShowTimes() {
         startReadFileShowTimes();
         logicRoom.startReadFileRoom();
@@ -48,7 +46,7 @@ public class LogicShowTime {
             }
         }while (true);
         for (int i = 0; i < quantity; i++) {
-            System.out.println("Nhập tên phòng thứ " + (i + 1));
+            System.out.println("Nhập tên phòng " + (i + 1));
             String name;
             Room room;
             do {
@@ -221,7 +219,9 @@ public class LogicShowTime {
 
     public void printAllShowTime() {
         startReadFileShowTimes();
-
+        if (showTimesList.isEmpty()){
+            System.out.println("Hiện tại rạp chưa có lịch chiếu nào. ");
+        }
         for (int i = 0; i < showTimesList.size(); i++) {
             for (int j = 0; j < showTimesList.get(i).getShowTimeMovieList().size(); j++) {
                     System.out.println("***************************************************");

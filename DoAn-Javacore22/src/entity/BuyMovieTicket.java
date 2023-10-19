@@ -23,6 +23,22 @@ public class BuyMovieTicket implements Serializable {
         this.toatlPrice = toatlPrice;
     }
 
+    public ServiceDetail getServiceDetails() {
+        return serviceDetails;
+    }
+
+    public void setServiceDetails(ServiceDetail serviceDetails) {
+        this.serviceDetails = serviceDetails;
+    }
+
+    public float getToatlPrice() {
+        return toatlPrice;
+    }
+
+    public void setToatlPrice(float toatlPrice) {
+        this.toatlPrice = toatlPrice;
+    }
+
     public int getTotalAmount() {
         return totalAmount;
     }

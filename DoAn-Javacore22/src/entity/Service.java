@@ -56,7 +56,7 @@ public class Service implements Serializable,InputInfor {
     @Override
     public void infor() {
         System.out.println("Nhập tên ");
-        this.setName(new Scanner(System.in).nextLine());
+        this.setName(new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " "));
         System.out.println("Nhập giá  ");
         this.setPrice(new Scanner(System.in).nextFloat());
         System.out.println("Dịch vụ trên thuộc loại nào");

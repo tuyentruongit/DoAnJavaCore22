@@ -111,7 +111,7 @@ public class LogicService {
         String name = new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " ");;
         for (int i = 0; i < serviceList.size() ; i++) {
             if (serviceList.get(i).getName().equalsIgnoreCase(name)){
-                System.out.print("Tên: "+serviceList.get(i).getName());
+                System.out.print("Tên: "+serviceList.get(i).getName()+" ");
                 System.out.println("Giá: "+serviceList.get(i).getPrice()+" VND");
                 return;
             }

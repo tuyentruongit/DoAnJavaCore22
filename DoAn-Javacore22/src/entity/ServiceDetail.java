@@ -1,6 +1,8 @@
 package entity;
 
-public class ServiceDetail {
+import java.io.Serializable;
+
+public class ServiceDetail implements Serializable {
     private int quantity;
     private Service service;
 

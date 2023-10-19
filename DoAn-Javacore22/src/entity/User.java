@@ -83,7 +83,7 @@ public class User extends Person implements InputInfor, Serializable {
     @Override
     public void infor() {
         System.out.println("Nhập tên của bạn : ");
-        this.setName(new Scanner(System.in).nextLine());
+        this.setName(new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " "));
         System.out.println("Nhập tuổi của bạn : ");
         int ago ;
         do {
@@ -100,7 +100,7 @@ public class User extends Person implements InputInfor, Serializable {
             }
         }while (true);
         System.out.println("Nhập địa chỉ  của bạn : ");
-        this.setAddress(new Scanner(System.in).nextLine());
+        this.setAddress(new Scanner(System.in).nextLine().trim().replaceAll("\\s+", " "));
         System.out.println("Nhập số điện thoại của bạn : ");
         do {
             do {

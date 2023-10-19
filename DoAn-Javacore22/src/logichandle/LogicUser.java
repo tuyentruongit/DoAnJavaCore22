@@ -5,12 +5,14 @@ import entity.User;
 import javax.imageio.plugins.tiff.TIFFDirectory;
 import javax.sound.midi.MidiFileFormat;
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class LogicUser {
-//    LogicBuyMovieTicket logicBuyMovieTicket;
-    LogicMovie logicMovie;
+
     List<User> userList = new ArrayList<>();
+
+
     public void inputInforUser() {
         startReadFileUser();
         User user = new User();
@@ -61,13 +63,14 @@ public class LogicUser {
 
     public User searchUser(String userName, String password) {
         startReadFileUser();
+        User user = null;
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getAccountName().equalsIgnoreCase(userName)
                     && userList.get(i).getPassword().equalsIgnoreCase(password)){
-                return userList.get(i);
+                    user= userList.get(i);
             }
         }
-        return null;
+        return user;
     }
 
     private void startReadFileUser() {
@@ -107,9 +110,15 @@ public class LogicUser {
         String name = new Scanner(System.in).nextLine();
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getName().equalsIgnoreCase(name)){
-                System.out.println(userList.get(i));
+                System.out.println("ID: "+userList.get(i).getIdUser());
+                System.out.println("Tên: "+userList.get(i).getName());
+                System.out.println("Tuổi: "+userList.get(i).getAgo());
+                System.out.println("Địa chỉ: "+userList.get(i).getAddress());
+                System.out.println("Số điện thoại: "+userList.get(i).getPhone());
+                return;
             }
         }
+        System.out.println("Không có khách hàng nào tên "+ name);
     }
 
     public void inforAccount() {
@@ -174,13 +183,17 @@ public class LogicUser {
     }
     public int nextId(){
         startReadFileUser();
+        boolean b = false;
         int a = 10000;
-        for (int i = 0; i < userList.size(); i++) {
-            for (int j = 10000; j <99999 ; j++) {
-                if (j==userList.get(i).getIdUser()){
-                    break;
+        for (int j = 10000; j <99999 ; j++) {
+            for (int i = 0; i < userList.size(); i++) {
+                if (j!=userList.get(i).getIdUser()){
+                   b = true;
                 }
-                a=i;
+            }
+            if (b){
+                a=j;
+                break;
             }
         }
         return a;
