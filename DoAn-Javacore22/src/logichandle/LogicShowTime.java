@@ -65,7 +65,7 @@ public class LogicShowTime {
                         System.out.println("Chưa có bộ phim nào , Vui lòng thêm mới");
                         return;
                     }
-                    System.out.println("Nhập tên phim thứ: ");
+                    System.out.println("Nhập tên phim : ");
                     String nameMovie;
                     Movie movie;
                     do {
@@ -227,7 +227,7 @@ public class LogicShowTime {
                     System.out.println("***************************************************");
                     System.out.println("Phòng chiếu: "+showTimesList.get(i).getRoom().getNameRoom());
                     System.out.println("Tên phim : "+showTimesList.get(i).getShowTimeMovieList().get(j).getMovie().getNameMovie());
-                    System.out.println("Thể Loại: "+showTimesList.get(i).getShowTimeMovieList().get(j).getMovie().getTypeMovie());
+                    System.out.println("Thể Loại: "+showTimesList.get(i).getShowTimeMovieList().get(j).getMovie().getTypeMovie().value);
                     System.out.println("Giờ chiếu: "+showTimesList.get(i).getShowTimeMovieList().get(j).getGiochieu());
                     System.out.println("Ngày chiếu: " + showTimesList.get(i).getShowTimeMovieList().get(j).getNgaychieu());
             }
