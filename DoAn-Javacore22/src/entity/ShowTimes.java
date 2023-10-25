@@ -13,22 +13,13 @@ public class ShowTimes implements Serializable {
         this.room = room;
         this.showTimeMovieList = showTimeMovieList;
     }
-
     public Room getRoom() {
         return room;
     }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
     public List<ShowTimeMovie> getShowTimeMovieList() {
         return showTimeMovieList;
     }
 
-    public void setShowTimeMovieList(List<ShowTimeMovie> showTimeMovieList) {
-        this.showTimeMovieList = showTimeMovieList;
-    }
 
     @Override
     public String toString() {

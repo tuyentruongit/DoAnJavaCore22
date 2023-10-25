@@ -38,7 +38,6 @@ public class LogicAdmin {
             }
         }
         return null;
-
     }
 
     public void menuService() {

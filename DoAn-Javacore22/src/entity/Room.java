@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Room implements Serializable {
+public class Room implements Serializable, InputInfor{
     private String nameRoom;
     private int capacity;
 

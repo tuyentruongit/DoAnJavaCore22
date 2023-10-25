@@ -27,33 +27,20 @@ public class BuyMovieTicket implements Serializable {
         return serviceDetails;
     }
 
-    public void setServiceDetails(ServiceDetail serviceDetails) {
-        this.serviceDetails = serviceDetails;
-    }
-
     public float getToatlPrice() {
         return toatlPrice;
     }
 
-    public void setToatlPrice(float toatlPrice) {
-        this.toatlPrice = toatlPrice;
-    }
 
     public int getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(int   totalAmount) {
-        this.totalAmount = totalAmount;
-    }
 
     public ShowTimes getShowTimes() {
         return showTimes;
     }
 
-    public void setShowTimes(ShowTimes showTimes) {
-        this.showTimes = showTimes;
-    }
 
 
     @Override

@@ -2,16 +2,7 @@ package entity;
 
 public class Admin extends Person {
 
-    private String position;
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
+    private final String position;
     public Admin(String account,String password,String position) {
         this.accountName = account;
         this.password= password;
