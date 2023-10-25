@@ -43,3 +43,6 @@
 ## 3. Biểu Đồ UML
  * 3.1 Biểu Đồ Class Diagram
 ![Hình ảnh](ManagementCenimaDiagram.drawio.png)
+## 4. Kết quả sau khi làm đồ án
+ * Làm ra phần mềm quản lý chiếu phim và bán vé
+ * Hiểu và biết thêm về kiến thức Java-Core
