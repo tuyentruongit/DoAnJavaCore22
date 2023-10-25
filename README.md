@@ -39,4 +39,4 @@
   - Hủy hoặc thay đổi vé:
     - Có khả năng hủy vé (theo chính sách hủy vé của rạp) hoặc thay đổi thông tin vé mua (nếu cho phép) qua tài khoản cá nhân.
 ## 3. Biểu Đồ UML
-![Hình ảnh máy tính](C:\Users\tuyen\OneDrive\Hình ảnh\Ảnh chụp màn hình.\)
+![Hình ảnh máy tính]([C:\Users\tuyen\OneDrive\Hình ảnh\Ảnh chụp màn hình.\](https://drive.google.com/file/d/1fCzOdV4Unr2UbA3N7iODJphzeEFuYABC/view?usp=sharing)https://drive.google.com/file/d/1fCzOdV4Unr2UbA3N7iODJphzeEFuYABC/view?usp=sharing)
