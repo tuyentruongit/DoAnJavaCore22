@@ -24,6 +24,7 @@
      - Tạo vé điện tử hoặc phiếu vé.
   - Quản lý khách hàng:
      - Tạo các báo cáo thống kê về doanh số bán vé, doanh thu, lịch sử buổi chiếu, và hoạt động của rạp chiếu phim.
+  - Đăng xuất ra khỏi hệ thống
 - Chức năng của Khách hàng:
   - Tìm kiếm và xem thông tin phim:
     -Xem danh sách các bộ phim đang chiếu, thông tin chi tiết về mỗi bộ phim, bao gồm nội dung, diễn viên, đạo diễn, thể loại, và lịch chiếu.
@@ -38,6 +39,7 @@
     - Xem thông tin chi tiết về vé đã mua.
   - Hủy hoặc thay đổi vé:
     - Có khả năng hủy vé (theo chính sách hủy vé của rạp) hoặc thay đổi thông tin vé mua (nếu cho phép) qua tài khoản cá nhân.
+  - Đăng xuất ra khỏi hệ thống
 ## 3. Biểu Đồ UML
  * 3.1 Biểu Đồ Class Diagram
 ![Hình ảnh](ManagementCenimaDiagram.drawio.png)
