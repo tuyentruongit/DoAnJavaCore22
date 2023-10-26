@@ -1,13 +1,14 @@
 # PHẦN MỀM QUẢN LÝ RẠP CHIẾU PHIM VÀ BÁN VÉ
 ## 1. Giới thiệu 
-  Phần mềm quản lý rạp chiếu phim và bán vé là một công cụ quan trọng giúp các rạp chiếu phim quản lý hoạt động kinh doanh hiệu quả hơn. Đây là một phần mềm đa năng được phát triển để giúp rạp chiếu phim tổ chức và quản lý các khía cạnh khác nhau của hoạt động , bao gồm bán vé, quản lý suất chiếu, theo dõi doanh số bán hàng, quản lý thông tin về phim, và nhiều chức năng khác.
+ Phần mềm quản lý rạp chiếu phim và bán vé là một công cụ quan trọng giúp các rạp chiếu phim quản lý hoạt động kinh doanh hiệu quả hơn. Đây là một phần mềm đa năng được phát triển để giúp rạp 
+ chiếu phim tổ chức và quản lý các khía cạnh khác nhau của hoạt động , bao gồm bán vé, quản lý suất chiếu, theo dõi doanh số bán hàng, quản lý thông tin về phim, và nhiều chức năng khác.
 
-## 3. Các chức năng cơ bản của phần mềm 
+## 2. Các chức năng cơ bản của phần mềm 
 - Đăng Nhập hệ thống: Phần mềm chó phép 2 quyền đăng nhập
    - Khách Hàng
    - Admin
-## 2. UML Use Case Diagram :
-![Hình ảnh](ManagementCenimaDiagram.drawio.png)
+## UML Use Case Diagram :
+![Hình ảnh](UseCaseDiagramManagementCinema.drawio.png)
 ## Chức năng của Admin:
 1. **Quản lý thông tin phim**:
      - Thêm, sửa, xóa thông tin về các bộ phim đang chiếu.
@@ -27,7 +28,7 @@
      - Tạo vé điện tử hoặc phiếu vé.
 5. **Thông kê daonh thu** :
      - Tạo các báo cáo thống kê về doanh số bán vé, doanh thu, lịch sử buổi chiếu, và hoạt động của rạp chiếu phim.
-  - Đăng xuất ra khỏi hệ thống
+6. **Đăng xuất khỏi hệ thống**:
 ### Chức năng của Khách hàng:
 1. **Xem lịch chiếu và phim**:
     - Khách hàng có thể xem lịch chiếu của các phim hiện đang chiếu và sắp tới.
@@ -35,19 +36,18 @@
 2. **Mua vé**:
     - Khách hàng có thể chọn phim và suất chiếu mà họ muốn xem.
     - Họ có thể chọn ghế ngồi và số lượng vé cần mua.
-
+      - Mỗi khi chọn ghế sẽ hiển thị phần ghế đã được các khác hàng trước đặt vé và hiển thị các ghế còn trống cho khách hàng lựa chọn.
+      - Mỗi vé được đặt thì hiển thị của ghế đó đã được đặt với những khách hàng tiếp theo.
+      - Hiển thị phần số lượng vé còn lại cho suất chiếu mà khách hàng đã chọn.
 3. **Thanh toán**:
     - Phần mềm hỗ trợ thanh toán vé trực tuyến qua các phương thức thanh toán an toàn như thẻ tín dụng hoặc ví điện tử.
     - Họ cũng có tùy chọn thanh toán tại quầy rạp.
-
 4. **Quản lý thông tin cá nhân**:
     - Khách hàng có thể cập nhật thông tin cá nhân của họ như tên, địa chỉ, số điện thoại và email.
     - Họ có quyền xem lịch sử mua vé và thông tin tài khoản của họ.
+5. **Đăng xuất khỏi hệ thống**:
 
-5. **Đăng xuất khỏi hệ thống **:
-
-## 3. Biểu Đồ UML
- * 3.1 Biểu Đồ Class Diagram
+## 3. Biểu Đồ Class Diagram
 ![Hình ảnh](ManagementCenimaDiagram.drawio.png)
 ## 4. Kết quả sau khi làm đồ án
  * Làm ra phần mềm quản lý chiếu phim và bán vé
