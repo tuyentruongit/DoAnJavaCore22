@@ -47,8 +47,13 @@
     - Họ có quyền xem lịch sử mua vé và thông tin tài khoản của họ.
 5. **Đăng xuất khỏi hệ thống**:
 
-## 3. Biểu Đồ Class Diagram
+## Biểu Đồ Class Diagram
 ![Hình ảnh](ManagementCenimaDiagram.drawio.png)
-## 4. Kết quả sau khi làm đồ án
+## 3. Kết quả sau khi làm đồ án
  * Làm ra phần mềm quản lý chiếu phim và bán vé
  * Hiểu và biết thêm về kiến thức Java-Core
+## 4. Hướng Phát triển trong tương lai
+ * Kết nối với mạng xã hội và cho phép khách hàng chia sẻ trải nghiệm của họ với bạn bè.
+ * Cải thiện bảo mật: Đảm bảo rằng dữ liệu khách hàng và thanh toán được bảo mật tối đa để tránh rủi ro về bảo mật thông tin cá nhân.
+ * Cải thiện quản lý lịch chiếu để tối ưu hóa hiệu suất của rạp chiếu phim, bao gồm lên lịch tự động và theo dõi hiệu suất chiếu.
+ * Tối ưu hóa giao diện người dùng để đảm bảo trải nghiệm người dùng tốt hơn. 
